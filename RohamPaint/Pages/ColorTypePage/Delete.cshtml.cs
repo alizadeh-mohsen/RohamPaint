@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Data;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.BaseColorPage
+namespace RohamPaint.Pages.ColorTypePage
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace RohamPaint.Pages.BaseColorPage
         }
 
         [BindProperty]
-        public BaseColor BaseColor { get; set; } = default!;
+        public ColorType ColorType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,15 +29,15 @@ namespace RohamPaint.Pages.BaseColorPage
                 return NotFound();
             }
 
-            var basecolor = await _context.BaseColor.FirstOrDefaultAsync(m => m.Id == id);
+            var colortype = await _context.ColorType.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (basecolor == null)
+            if (colortype == null)
             {
                 return NotFound();
             }
             else
             {
-                BaseColor = basecolor;
+                ColorType = colortype;
             }
             return Page();
         }
@@ -49,11 +49,11 @@ namespace RohamPaint.Pages.BaseColorPage
                 return NotFound();
             }
 
-            var basecolor = await _context.BaseColor.FindAsync(id);
-            if (basecolor != null)
+            var colortype = await _context.ColorType.FindAsync(id);
+            if (colortype != null)
             {
-                BaseColor = basecolor;
-                _context.BaseColor.Remove(BaseColor);
+                ColorType = colortype;
+                _context.ColorType.Remove(ColorType);
                 await _context.SaveChangesAsync();
             }
 

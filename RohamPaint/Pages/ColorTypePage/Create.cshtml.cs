@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using RohamPaint.Data;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.CarPage
+namespace RohamPaint.Pages.ColorTypePage
 {
     public class CreateModel : PageModel
     {
@@ -25,7 +25,7 @@ namespace RohamPaint.Pages.CarPage
         }
 
         [BindProperty]
-        public Car Make { get; set; } = default!;
+        public ColorType ColorType { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -35,7 +35,7 @@ namespace RohamPaint.Pages.CarPage
                 return Page();
             }
 
-            _context.Car.Add(Make);
+            _context.ColorType.Add(ColorType);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

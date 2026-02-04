@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Data;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.BaseColorPage
+namespace RohamPaint.Pages.UnitPage
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace RohamPaint.Pages.BaseColorPage
             _context = context;
         }
 
-        public BaseColor BaseColor { get; set; } = default!;
+        public Unit Unit { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,14 +28,14 @@ namespace RohamPaint.Pages.BaseColorPage
                 return NotFound();
             }
 
-            var basecolor = await _context.BaseColor.FirstOrDefaultAsync(m => m.Id == id);
-            if (basecolor == null)
+            var unit = await _context.Unit.FirstOrDefaultAsync(m => m.Id == id);
+            if (unit == null)
             {
                 return NotFound();
             }
             else
             {
-                BaseColor = basecolor;
+                Unit = unit;
             }
             return Page();
         }

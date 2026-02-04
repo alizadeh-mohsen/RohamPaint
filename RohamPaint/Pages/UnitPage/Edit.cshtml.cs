@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Data;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.CarPage
+namespace RohamPaint.Pages.UnitPage
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace RohamPaint.Pages.CarPage
         }
 
         [BindProperty]
-        public Car Make { get; set; } = default!;
+        public Unit Unit { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,12 +30,12 @@ namespace RohamPaint.Pages.CarPage
                 return NotFound();
             }
 
-            var make =  await _context.Car.FirstOrDefaultAsync(m => m.Id == id);
-            if (make == null)
+            var unit =  await _context.Unit.FirstOrDefaultAsync(m => m.Id == id);
+            if (unit == null)
             {
                 return NotFound();
             }
-            Make = make;
+            Unit = unit;
             return Page();
         }
 
@@ -48,7 +48,7 @@ namespace RohamPaint.Pages.CarPage
                 return Page();
             }
 
-            _context.Attach(Make).State = EntityState.Modified;
+            _context.Attach(Unit).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace RohamPaint.Pages.CarPage
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MakeExists(Make.Id))
+                if (!UnitExists(Unit.Id))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace RohamPaint.Pages.CarPage
             return RedirectToPage("./Index");
         }
 
-        private bool MakeExists(int id)
+        private bool UnitExists(int id)
         {
-            return _context.Car.Any(e => e.Id == id);
+            return _context.Unit.Any(e => e.Id == id);
         }
     }
 }

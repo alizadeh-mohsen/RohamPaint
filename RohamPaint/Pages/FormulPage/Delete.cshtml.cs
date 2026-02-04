@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Data;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.CarPage
+namespace RohamPaint.Pages.FormulPage
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace RohamPaint.Pages.CarPage
         }
 
         [BindProperty]
-        public Car Make { get; set; } = default!;
+        public Color Color { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,15 +29,15 @@ namespace RohamPaint.Pages.CarPage
                 return NotFound();
             }
 
-            var make = await _context.Car.FirstOrDefaultAsync(m => m.Id == id);
+            var color = await _context.Color.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (make == null)
+            if (color == null)
             {
                 return NotFound();
             }
             else
             {
-                Make = make;
+                Color = color;
             }
             return Page();
         }
@@ -49,11 +49,11 @@ namespace RohamPaint.Pages.CarPage
                 return NotFound();
             }
 
-            var make = await _context.Car.FindAsync(id);
-            if (make != null)
+            var color = await _context.Color.FindAsync(id);
+            if (color != null)
             {
-                Make = make;
-                _context.Car.Remove(Make);
+                Color = color;
+                _context.Color.Remove(Color);
                 await _context.SaveChangesAsync();
             }
 

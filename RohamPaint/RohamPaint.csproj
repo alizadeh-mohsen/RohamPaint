@@ -8,6 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\FormulPage\Delete.cshtml.cs" />
+    <Compile Remove="Pages\FormulPage\Details.cshtml.cs" />
+    <Compile Remove="Pages\FormulPage\Edit.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\FormulPage\Delete.cshtml" />
+    <Content Remove="Pages\FormulPage\Details.cshtml" />
+    <Content Remove="Pages\FormulPage\Edit.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.23" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.23" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.23" />

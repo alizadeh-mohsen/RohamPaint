@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RohamPaint.Pages.CarPage
+namespace RohamPaint.Pages.ColorTypePage
 {
     public class IndexModel : PageModel
     {
@@ -22,22 +22,22 @@ namespace RohamPaint.Pages.CarPage
 
         public MetaData MetaData { get; set; } = default!;
 
-        public IList<Car> Car { get; set; } = default!;
+        public IList<ColorType> ColorType { get;set; } = default!;
 
         public async Task OnGetAsync([FromQuery] QueryParams queryParams, string? search)
         {
-            var query = _context.Car.AsQueryable().AsNoTracking();
-            query = query.OrderBy(c => c.Make);
+            var query = _context.ColorType.AsQueryable().AsNoTracking();
+            query = query.OrderBy(c => c.Type);
             if (!string.IsNullOrWhiteSpace(search))
             {
                 string lowerSearch = search.ToLower();
                 query = query.Where(c =>
-                    (c.Make != null && c.Make.ToLower().Contains(lowerSearch))
+                    (c.Type != null && c.Type.ToLower().Contains(lowerSearch))
                 );
             }
-            var customers = await PagedList<Car>.ToPagedList(query, queryParams.PageNumber, queryParams.PageSize);
+            var customers = await PagedList<ColorType>.ToPagedList(query, queryParams.PageNumber, queryParams.PageSize);
             MetaData = customers.MetaData;
-            Car = customers;
+            ColorType = customers;
         }
     }
 }

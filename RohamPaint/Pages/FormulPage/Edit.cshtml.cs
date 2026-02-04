@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Data;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.BaseColorPage
+namespace RohamPaint.Pages.FormulPage
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace RohamPaint.Pages.BaseColorPage
         }
 
         [BindProperty]
-        public BaseColor BaseColor { get; set; } = default!;
+        public Color Color { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,17 +30,18 @@ namespace RohamPaint.Pages.BaseColorPage
                 return NotFound();
             }
 
-            var basecolor =  await _context.BaseColor.FirstOrDefaultAsync(m => m.Id == id);
-            if (basecolor == null)
+            var color =  await _context.Color.FirstOrDefaultAsync(m => m.ID == id);
+            if (color == null)
             {
                 return NotFound();
             }
-            BaseColor = basecolor;
+            Color = color;
+           ViewData["CarID"] = new SelectList(_context.Car, "Id", "Id");
+           ViewData["ColorTypeID"] = new SelectList(_context.ColorType, "Id", "Id");
+           ViewData["UnitId"] = new SelectList(_context.Unit, "Id", "Id");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -48,7 +49,7 @@ namespace RohamPaint.Pages.BaseColorPage
                 return Page();
             }
 
-            _context.Attach(BaseColor).State = EntityState.Modified;
+            _context.Attach(Color).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +57,7 @@ namespace RohamPaint.Pages.BaseColorPage
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BaseColorExists(BaseColor.Id))
+                if (!ColorExists(Color.ID))
                 {
                     return NotFound();
                 }
@@ -69,9 +70,9 @@ namespace RohamPaint.Pages.BaseColorPage
             return RedirectToPage("./Index");
         }
 
-        private bool BaseColorExists(int id)
+        private bool ColorExists(int id)
         {
-            return _context.BaseColor.Any(e => e.Id == id);
+            return _context.Color.Any(e => e.ID == id);
         }
     }
 }

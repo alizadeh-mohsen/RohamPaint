@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using RohamPaint.Data;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.BaseColorPage
+namespace RohamPaint.Pages.UnitPage
 {
     public class CreateModel : PageModel
     {
@@ -25,7 +25,7 @@ namespace RohamPaint.Pages.BaseColorPage
         }
 
         [BindProperty]
-        public BaseColor BaseColor { get; set; } = default!;
+        public Unit Unit { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -35,7 +35,7 @@ namespace RohamPaint.Pages.BaseColorPage
                 return Page();
             }
 
-            _context.BaseColor.Add(BaseColor);
+            _context.Unit.Add(Unit);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

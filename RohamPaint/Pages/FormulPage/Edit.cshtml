@@ -1,0 +1,65 @@
+﻿@page
+@model RohamPaint.Pages.FormulPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Color</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Color.ID" />
+            <div class="form-group">
+                <label asp-for="Color.CarID" class="control-label"></label>
+                <select asp-for="Color.CarID" class="form-control" asp-items="ViewBag.CarID" ></select>
+                <span asp-validation-for="Color.CarID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color.ColorTypeID" class="control-label"></label>
+                <select asp-for="Color.ColorTypeID" class="form-control" asp-items="ViewBag.ColorTypeID" ></select>
+                <span asp-validation-for="Color.ColorTypeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color.Code" class="control-label"></label>
+                <input asp-for="Color.Code" class="form-control" />
+                <span asp-validation-for="Color.Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color.Comment" class="control-label"></label>
+                <input asp-for="Color.Comment" class="form-control" />
+                <span asp-validation-for="Color.Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color.UnitId" class="control-label"></label>
+                <select asp-for="Color.UnitId" class="form-control" asp-items="ViewBag.UnitId" ></select>
+                <span asp-validation-for="Color.UnitId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color.Usage" class="control-label"></label>
+                <input asp-for="Color.Usage" class="form-control" />
+                <span asp-validation-for="Color.Usage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color.BaseId" class="control-label"></label>
+                <input asp-for="Color.BaseId" class="form-control" />
+                <span asp-validation-for="Color.BaseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

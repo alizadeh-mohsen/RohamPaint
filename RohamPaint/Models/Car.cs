@@ -1,9 +1,9 @@
 ﻿namespace RohamPaint.Models
 {
-    public class Make
+    public class Car
     {
         public int Id { get; set; }
-        public string Car { get; set; }
+        public string Make { get; set; }
         public bool IsCompany { get; set; }
 
 

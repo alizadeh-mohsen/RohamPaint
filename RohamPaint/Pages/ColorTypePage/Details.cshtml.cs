@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Data;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.CarPage
+namespace RohamPaint.Pages.ColorTypePage
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace RohamPaint.Pages.CarPage
             _context = context;
         }
 
-        public Car Make { get; set; } = default!;
+        public ColorType ColorType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,14 +28,14 @@ namespace RohamPaint.Pages.CarPage
                 return NotFound();
             }
 
-            var make = await _context.Car.FirstOrDefaultAsync(m => m.Id == id);
-            if (make == null)
+            var colortype = await _context.ColorType.FirstOrDefaultAsync(m => m.Id == id);
+            if (colortype == null)
             {
                 return NotFound();
             }
             else
             {
-                Make = make;
+                ColorType = colortype;
             }
             return Page();
         }

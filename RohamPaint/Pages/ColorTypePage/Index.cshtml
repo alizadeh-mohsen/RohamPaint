@@ -1,18 +1,18 @@
 ﻿@page
-@model RohamPaint.Pages.CarPage.IndexModel
+@model RohamPaint.Pages.ColorTypePage.IndexModel
 
 @{
     ViewData["Title"] = "Index";
     var start = Model.MetaData.TotalCount == 0 ? 0 : ((Model.MetaData.CurrentPage - 1) * Model.MetaData.PageSize) + 1;
-    var end = start == 0 ? 0 : start + (Model.Car?.Count ?? 0) - 1;
+    var end = start == 0 ? 0 : start + (Model.ColorType?.Count ?? 0) - 1;
 }
-
-
 <h1>Index</h1>
+
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
 <form method="get" class="row g-3 mb-4">
     <div class="col-md-10">
         <input type="text" name="search" class="form-control" placeholder="Search by name, email, or phone..." value="@ViewContext.HttpContext.Request.Query["search"]" />
@@ -26,30 +26,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Car[0].Make)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car[0].IsCompany)
+                @Html.DisplayNameFor(model => model.ColorType[0].Type)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Car) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Make)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsCompany)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.ColorType)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -100,3 +95,4 @@
         </nav>
     </div>
 </div>
+

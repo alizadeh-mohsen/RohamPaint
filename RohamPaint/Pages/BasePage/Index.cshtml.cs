@@ -23,6 +23,7 @@ namespace RohamPaint.Pages.BasePage
         public async Task OnGetAsync([FromQuery] QueryParams queryParams, string? search)
         {
             var query = _context.Base.AsQueryable().AsNoTracking();
+            query = query.OrderBy(c => c.Id);
             if (!string.IsNullOrWhiteSpace(search))
             {
                 string lowerSearch = search.ToLower();
