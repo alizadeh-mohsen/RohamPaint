@@ -15,11 +15,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Color.CarID" class="control-label"></label>
-                <select asp-for="Color.CarID" class ="form-control" asp-items="ViewBag.CarID" ></select>
+                <select asp-for="Color.CarID" class ="form-select" asp-items="ViewBag.CarID" ></select>
             </div>
             <div class="form-group">
                 <label asp-for="Color.ColorTypeID" class="control-label"></label>
-                <select asp-for="Color.ColorTypeID" class ="form-control" asp-items="ViewBag.ColorTypeID" ></select>
+                <select asp-for="Color.ColorTypeID" class ="form-select" asp-items="ViewBag.ColorTypeID" ></select>
             </div>
             <div class="form-group">
                 <label asp-for="Color.Code" class="control-label"></label>
@@ -27,39 +27,57 @@
                 <span asp-validation-for="Color.Code" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Color.Comment" class="control-label"></label>
-                <input asp-for="Color.Comment" class="form-control" />
-                <span asp-validation-for="Color.Comment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Color.Lock" class="control-label"></label>
-                <input asp-for="Color.Lock" class="form-control" />
-                <span asp-validation-for="Color.Lock" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Color.LastUpdate" class="control-label"></label>
-                <input asp-for="Color.LastUpdate" class="form-control" />
-                <span asp-validation-for="Color.LastUpdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Color.UnitId" class="control-label"></label>
-                <select asp-for="Color.UnitId" class ="form-control" asp-items="ViewBag.UnitId" ></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Color.Usage" class="control-label"></label>
-                <input asp-for="Color.Usage" class="form-control" />
-                <span asp-validation-for="Color.Usage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Color.Accuracy" class="control-label"></label>
-                <input asp-for="Color.Accuracy" class="form-control" />
-                <span asp-validation-for="Color.Accuracy" class="text-danger"></span>
+                <select asp-for="Color.UnitId" class="form-control" asp-items="ViewBag.UnitId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Color.BaseId" class="control-label"></label>
-                <input asp-for="Color.BaseId" class="form-control" />
+                <input asp-for="Color.BaseId" class="form-select" />
                 <span asp-validation-for="Color.BaseId" class="text-danger"></span>
             </div>
+            <div class="container mt-4">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label">Key (String)</label>
+                        <input type="text" id="inputKey" class="form-control" placeholder="Enter name...">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Value (Int)</label>
+                        <input type="number" id="inputValue" class="form-control" placeholder="Enter number...">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" id="btnAdd" class="btn btn-primary w-100">Add to List</button>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Keys List</label>
+                        <select id="listKeys" size="5" class="form-select"></select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Values List</label>
+                        <select id="listValues" size="5" class="form-select"></select>
+                    </div>
+                </div>
+
+                <form method="post" class="mt-4">
+                    <input type="hidden" name="DictionaryJson" id="DictionaryJson" />
+                    <button type="submit" class="btn btn-success">Save to Database</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color.Comment" class="control-label"></label>
+                <textarea asp-for="Color.Comment" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Color.Comment" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group">
+                <label asp-for="Color.Usage" class="control-label"></label>
+                <textarea asp-for="Color.Usage" rows="3" class="form-control" ></textarea>
+                <span asp-validation-for="Color.Usage" class="text-danger"></span>
+            </div>
+          
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

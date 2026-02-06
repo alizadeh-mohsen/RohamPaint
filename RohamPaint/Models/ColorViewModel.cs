@@ -10,23 +10,24 @@ namespace RohamPaint.Models
         [DisplayName("Make")]
         public int CarID { get; set; }
 
+        [DisplayName("Color Group")]
         public int ColorTypeID { get; set; }
 
+        [DisplayName("Color Code")]
         public string Code { get; set; } = null!;
-
+        
+        [DisplayName("Color Description")]
         public string? Comment { get; set; }
 
-        public bool? Lock { get; set; }
-
-        public DateTime? LastUpdate { get; set; }
-
+        [DisplayName("Unit")]
         public int? UnitId { get; set; }
 
         public string? Usage { get; set; }
 
-        public byte Accuracy { get; set; } = 0;
-
+        [DisplayName("Base")]
         public int? BaseId { get; set; }
+
+        public Dictionary<string,float> Formul { get; set; }
 
         // Navigation properties
         public virtual Car Car { get; set; } = null!;
