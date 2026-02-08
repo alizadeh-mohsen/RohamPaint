@@ -27,7 +27,7 @@
                 @Html.DisplayNameFor(model => model.Colors[0].Code)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Colors[0].Car)
+                @Html.DisplayNameFor(model => model.Colors[0].Make)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Colors[0].ColorType)
@@ -39,6 +39,9 @@
 
             <th>
                 @Html.DisplayNameFor(model => model.Colors[0].Usage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Colors[0].LastUpdate)
             </th>
             
             <th>
@@ -55,10 +58,10 @@
                     @Html.DisplayFor(modelItem => item.Code)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Car.Make)
+                    @Html.DisplayFor(modelItem => item.Make)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ColorType.Type)
+                    @Html.DisplayFor(modelItem => item.ColorType)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Comment)
@@ -69,7 +72,10 @@
                     @Html.DisplayFor(modelItem => item.Usage)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Unit.Name)
+                    @Html.DisplayFor(modelItem => item.LastUpdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |

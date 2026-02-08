@@ -24,7 +24,9 @@
 
         public virtual ColorType ColorType { get; set; } = null!;
 
-        public virtual Unit? Unit { get; set; }
+        public virtual Unit Unit { get; set; }
+
+        public DateTime LastUpdate { get; set; }
 
     }
 

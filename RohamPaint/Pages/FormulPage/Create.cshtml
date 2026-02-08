@@ -14,12 +14,12 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Color.CarID" class="control-label"></label>
-                <select asp-for="Color.CarID" class ="form-select" asp-items="ViewBag.CarID" ></select>
+                <label asp-for="Color.Make" class="control-label"></label>
+                <select asp-for="Color.Make" class ="form-select" asp-items="ViewBag.CarID" ></select>
             </div>
             <div class="form-group">
-                <label asp-for="Color.ColorTypeID" class="control-label"></label>
-                <select asp-for="Color.ColorTypeID" class ="form-select" asp-items="ViewBag.ColorTypeID" ></select>
+                <label asp-for="Color.ColorType" class="control-label"></label>
+                <select asp-for="Color.ColorType" class ="form-select" asp-items="ViewBag.ColorTypeID" ></select>
             </div>
             <div class="form-group">
                 <label asp-for="Color.Code" class="control-label"></label>
@@ -27,14 +27,14 @@
                 <span asp-validation-for="Color.Code" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Color.UnitId" class="control-label"></label>
-                <select asp-for="Color.UnitId" class="form-control" asp-items="ViewBag.UnitId"></select>
+                <label asp-for="Color.Unit" class="control-label"></label>
+                <select asp-for="Color.Unit" class="form-control" asp-items="ViewBag.UnitId"></select>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="Color.BaseId" class="control-label"></label>
                 <input asp-for="Color.BaseId" class="form-select" />
                 <span asp-validation-for="Color.BaseId" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="container mt-4">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
@@ -72,11 +72,11 @@
                 <span asp-validation-for="Color.Comment" class="text-danger"></span>
             </div>
           
-            <div class="form-group">
+          @*   <div class="form-group">
                 <label asp-for="Color.Usage" class="control-label"></label>
                 <textarea asp-for="Color.Usage" rows="3" class="form-control" ></textarea>
                 <span asp-validation-for="Color.Usage" class="text-danger"></span>
-            </div>
+            </div> *@
           
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

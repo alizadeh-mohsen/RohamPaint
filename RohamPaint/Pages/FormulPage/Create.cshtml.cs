@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RohamPaint.Data;
-using RohamPaint.Models;
+using RohamPaint.ViewModels;
 
 namespace RohamPaint.Pages.FormulPage
 {
