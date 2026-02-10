@@ -9,13 +9,11 @@
 
   <ItemGroup>
     <Compile Remove="Pages\FormulPage\Delete.cshtml.cs" />
-    <Compile Remove="Pages\FormulPage\Details.cshtml.cs" />
     <Compile Remove="Pages\FormulPage\Edit.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Pages\FormulPage\Delete.cshtml" />
-    <Content Remove="Pages\FormulPage\Details.cshtml" />
     <Content Remove="Pages\FormulPage\Edit.cshtml" />
   </ItemGroup>
 

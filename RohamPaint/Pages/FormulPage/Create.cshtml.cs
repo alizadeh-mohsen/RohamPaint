@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using RohamPaint.Data;
 using RohamPaint.ViewModels;
 
 namespace RohamPaint.Pages.FormulPage
@@ -21,16 +16,17 @@ namespace RohamPaint.Pages.FormulPage
 
         public IActionResult OnGet()
         {
-        ViewData["CarID"] = new SelectList(_context.Car, "Id", "Make");
-        ViewData["ColorTypeID"] = new SelectList(_context.ColorType, "Id", "Type");
-        ViewData["UnitId"] = new SelectList(_context.Unit, "Id", "Name");
-        ViewData["BaseId"] = new SelectList(_context.Base, "Id", "Name");
+            ViewData["BaseId"] = new SelectList(_context.Base, "Id", "Name");
+            ViewData["CarId"] = new SelectList(_context.Car, "Id", "Make");
+            ViewData["ColorTypeId"] = new SelectList(_context.ColorType, "Id", "Type");
+            ViewData["UnitId"] = new SelectList(_context.Unit, "Id", "Name");
             return Page();
         }
 
         [BindProperty]
-        public ColorViewModel Color { get; set; } = default!;
+        public ColorCreateViewModel ColorCreateViewModel { get; set; } = default!;
 
+        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -38,10 +34,20 @@ namespace RohamPaint.Pages.FormulPage
                 return Page();
             }
 
-            //_context.Color.Add(Color);
-            //await _context.SaveChangesAsync();
+            _context.ColorCreateViewModel.Add(ColorCreateViewModel);
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+        public class ColorWeightItem
+        {
+            public string BaseColor { get; set; }
+            public decimal Weight { get; set; }
+        }
+
+        public class ColorWeightViewModel
+        {
+            public List<ColorWeightItem> ColorWeights { get; set; } = new();
         }
     }
 }

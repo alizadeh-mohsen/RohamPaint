@@ -12,12 +12,16 @@
 
         public string? Comment { get; set; }
 
+        public bool Lock { get; set; }
+        public DateTime LastUpdate { get; set; }
+
         public int? UnitId { get; set; }
 
+        public short Accuracy { get; set; }
         public string? Usage { get; set; }
 
-        public virtual Base Base { get; set; }
         public int? BaseId { get; set; }
+        public virtual Base Base { get; set; }
 
         // Navigation properties
         public virtual Car Car { get; set; } = null!;
@@ -26,7 +30,6 @@
 
         public virtual Unit Unit { get; set; }
 
-        public DateTime LastUpdate { get; set; }
 
     }
 

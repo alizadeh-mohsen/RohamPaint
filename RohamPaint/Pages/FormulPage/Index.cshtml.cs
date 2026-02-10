@@ -41,7 +41,9 @@ namespace RohamPaint.Pages.FormulPage
                 {
                     string lowerSearch = search.ToLower();
                     query = query.Where(c =>
-                        (c.Code != null && c.Code.ToLower().Contains(lowerSearch))
+                        (c.Code != null && c.Code.ToLower().Contains(lowerSearch) ||
+                        c.Comment != null && c.Comment.ToLower().Contains(lowerSearch) ||
+                        c.Make != null && c.Make.ToLower().Contains(lowerSearch))
                     );
                 }
 
