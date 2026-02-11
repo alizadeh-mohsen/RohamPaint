@@ -35,9 +35,43 @@
                 <label asp-for="ColorCreateViewModel.BaseId" class="control-label"></label>
                 <select asp-for="ColorCreateViewModel.BaseId" class="form-select" asp-items="ViewBag.BaseId"></select>
             </div>
+
+            <h5 class="mb-3">Formuls</h5>
+
+            <table class="table table-bordered" id="formulTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Formul</th>
+                        <th style="width: 60px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ColorCreateViewModel.Formuls.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input asp-for="ColorCreateViewModel.Formuls[i].BaseColor.Code" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="ColorCreateViewModel.Formuls[i].Weight" class="form-control" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm remove-formul">X</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <button type="button" id="addFormul" class="btn btn-secondary mb-3">
+                Add Formul
+            </button>
+
+
+
             <div class="form-group">
                 <label asp-for="ColorCreateViewModel.Comment" class="control-label"></label>
-                
+
                 <textarea asp-for="ColorCreateViewModel.Comment" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="ColorCreateViewModel.Comment" class="text-danger"></span>
             </div>
@@ -46,31 +80,7 @@
                 <textarea asp-for="ColorCreateViewModel.Usage" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="ColorCreateViewModel.Usage" class="text-danger"></span>
             </div>
-            <div class="card shadow-sm" style="width: 22rem;">
-                <div class="card-header bg-primary text-white text-center fw-bold">
-                    Color Weights
-                </div>
 
-                <div class="card-body p-0">
-                    <table class="table table-bordered mb-0 text-center">
-                        <thead class="bg-warning">
-                            <tr>
-                                <th>Base Color</th>
-                                <th>Weight</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.ColorWeights)
-                            {
-                                <tr>
-                                    <td>@item.BaseColor</td>
-                                    <td>@item.Weight</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -86,4 +96,31 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        document.getElementById("addFormul").addEventListener("click", function () {
+            const table = document.querySelector("#formulTable tbody");
+            const index = table.rows.length;
+
+            const row = `
+                <tr>
+                    <td>
+                        <input name="ColorCreateViewModel.Formuls[${index}].Color.Code" class="form-control" />
+                    </td>
+                    <td>
+                        <input name="ColorCreateViewModel.Formuls[${index}].Weight" class="form-control" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm remove-formul">X</button>
+                    </td>
+                </tr>`;
+
+            table.insertAdjacentHTML("beforeend", row);
+        });
+
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-formul")) {
+                e.target.closest("tr").remove();
+            }
+        });
+    </script>
 }

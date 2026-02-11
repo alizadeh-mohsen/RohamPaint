@@ -25,7 +25,7 @@ namespace RohamPaint.Pages.FormulPage
                 var query = _context.Color.AsNoTracking()
                 .Select(c => new ColorViewModel
                 {
-                    ID = c.ID,
+                    ID = c.Id,
                     Code = c.Code,
                     Make = c.Car.Make,
                     ColorType = c.ColorType.Type,

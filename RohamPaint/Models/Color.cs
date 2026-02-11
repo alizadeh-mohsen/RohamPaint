@@ -2,11 +2,11 @@
 {
     public class Color
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
-        public int CarID { get; set; }
+        public int CarId { get; set; }
 
-        public int ColorTypeID { get; set; }
+        public int ColorTypeId { get; set; }
 
         public string Code { get; set; } = null!;
 

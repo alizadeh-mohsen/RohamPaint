@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RohamPaint.ViewModels;
@@ -7,11 +8,13 @@ namespace RohamPaint.Pages.FormulPage
 {
     public class CreateModel : PageModel
     {
-        private readonly RohamPaint.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CreateModel(RohamPaint.Data.ApplicationDbContext context)
+        public CreateModel(Data.ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IActionResult OnGet()
@@ -20,6 +23,7 @@ namespace RohamPaint.Pages.FormulPage
             ViewData["CarId"] = new SelectList(_context.Car, "Id", "Make");
             ViewData["ColorTypeId"] = new SelectList(_context.ColorType, "Id", "Type");
             ViewData["UnitId"] = new SelectList(_context.Unit, "Id", "Name");
+            ColorCreateViewModel.Formuls.Add(new Models.Formul()); // Add an initial empty formul for the form
             return Page();
         }
 
@@ -34,20 +38,25 @@ namespace RohamPaint.Pages.FormulPage
                 return Page();
             }
 
-            _context.ColorCreateViewModel.Add(ColorCreateViewModel);
+            var color = _mapper.Map<Models.Color>(ColorCreateViewModel);
+
+            _context.Color.Add(color);
             await _context.SaveChangesAsync();
+
+            foreach (var formul in ColorCreateViewModel.Formuls)
+            {
+                if (!string.IsNullOrWhiteSpace(formul.BaseColor.Code))
+                {
+                    formul.CountryId = ColorCreateViewModel.Country.Id;
+                    _context.Cities.Add(formul);
+                }
+            }
+
+            _context.SaveChanges();
+
 
             return RedirectToPage("./Index");
         }
-        public class ColorWeightItem
-        {
-            public string BaseColor { get; set; }
-            public decimal Weight { get; set; }
-        }
 
-        public class ColorWeightViewModel
-        {
-            public List<ColorWeightItem> ColorWeights { get; set; } = new();
-        }
     }
 }
