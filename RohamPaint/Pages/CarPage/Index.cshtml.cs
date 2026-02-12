@@ -27,12 +27,12 @@ namespace RohamPaint.Pages.CarPage
         public async Task OnGetAsync([FromQuery] QueryParams queryParams, string? search)
         {
             var query = _context.Car.AsQueryable().AsNoTracking();
-            query = query.OrderBy(c => c.Make);
+            query = query.OrderBy(c => c.Name);
             if (!string.IsNullOrWhiteSpace(search))
             {
                 string lowerSearch = search.ToLower();
                 query = query.Where(c =>
-                    (c.Make != null && c.Make.ToLower().Contains(lowerSearch))
+                    (c.Name != null && c.Name.ToLower().Contains(lowerSearch))
                 );
             }
             var customers = await PagedList<Car>.ToPagedList(query, queryParams.PageNumber, queryParams.PageSize);

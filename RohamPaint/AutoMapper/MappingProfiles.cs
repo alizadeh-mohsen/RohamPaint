@@ -7,7 +7,7 @@ namespace RohamPaint.AutoMapper
         public MappingProfiles()
         {
             CreateMap<Models.Color, ViewModels.ColorViewModel>()
-                .ForMember(dest => dest.Make, opt => opt.MapFrom(src => src.Car.Make))
+                .ForMember(dest => dest.Make, opt => opt.MapFrom(src => src.Car.Name))
                 .ForMember(dest => dest.ColorType, opt => opt.MapFrom(src => src.ColorType.Type))
                 .ForMember(dest => dest.Unit, opt => opt.MapFrom(src => src.Unit != null ? src.Unit.Name : null));
 

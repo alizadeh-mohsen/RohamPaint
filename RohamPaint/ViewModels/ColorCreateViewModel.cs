@@ -23,7 +23,7 @@ namespace RohamPaint.ViewModels
         public string? Usage { get; set; }
         [DisplayName("Base")]
         public int? BaseId { get; set; }
-        public List<Formul> Formuls { get; set; } = new List<Formul>();
+        public List<ColorFormul> Formuls { get; set; } = new List<ColorFormul>();
 
         //public virtual Base Base { get; set; }
         //public virtual Car Car { get; set; } = null!;

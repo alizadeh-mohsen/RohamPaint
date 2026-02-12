@@ -23,7 +23,7 @@ namespace RohamPaint.Pages.FormulPage
             ViewData["CarId"] = new SelectList(_context.Car, "Id", "Make");
             ViewData["ColorTypeId"] = new SelectList(_context.ColorType, "Id", "Type");
             ViewData["UnitId"] = new SelectList(_context.Unit, "Id", "Name");
-            ColorCreateViewModel.Formuls.Add(new Models.Formul()); // Add an initial empty formul for the form
+            ColorCreateViewModel.Formuls.Add(new Models.ColorFormul()); // Add an initial empty formul for the form
             return Page();
         }
 
@@ -45,11 +45,16 @@ namespace RohamPaint.Pages.FormulPage
 
             foreach (var formul in ColorCreateViewModel.Formuls)
             {
-                if (!string.IsNullOrWhiteSpace(formul.BaseColor.Code))
-                {
-                    formul.CountryId = ColorCreateViewModel.Country.Id;
-                    _context.Cities.Add(formul);
-                }
+                    var colorFormul = new  Models.ColorFormul
+                    {
+                        ColorID = color.Id,
+                        BaseCode = formul.BaseCode,
+                        Weight = formul.Weight
+                    };
+
+
+                    _context.ColorFormul.Add(formul);
+                
             }
 
             _context.SaveChanges();

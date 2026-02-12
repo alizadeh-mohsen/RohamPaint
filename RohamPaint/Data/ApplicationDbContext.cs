@@ -16,7 +16,8 @@ namespace RohamPaint.Data
         public DbSet<ColorType> ColorType { get; set; } = default!;
         public DbSet<Unit> Unit { get; set; } = default!;
         public DbSet<Formul> Formul { get; set; } = default!;
+        public DbSet<ColorFormul> ColorFormul { get; set; } = default!;
         public DbSet<Color> Color { get; set; } = default!;
-        public DbSet<RohamPaint.ViewModels.ColorCreateViewModel> ColorCreateViewModel { get; set; } = default!;
+        public DbSet<ViewModels.ColorCreateViewModel> ColorCreateViewModel { get; set; } = default!;
     }
 }

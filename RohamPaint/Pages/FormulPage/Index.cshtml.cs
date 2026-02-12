@@ -27,7 +27,7 @@ namespace RohamPaint.Pages.FormulPage
                 {
                     ID = c.Id,
                     Code = c.Code,
-                    Make = c.Car.Make,
+                    Make = c.Car.Name,
                     ColorType = c.ColorType.Type,
                     Comment = c.Comment,
                     LastUpdate = c.LastUpdate,
