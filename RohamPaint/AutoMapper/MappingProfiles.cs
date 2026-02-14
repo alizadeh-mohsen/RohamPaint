@@ -12,6 +12,8 @@ namespace RohamPaint.AutoMapper
                 .ForMember(dest => dest.Unit, opt => opt.MapFrom(src => src.Unit != null ? src.Unit.Name : null));
 
             CreateMap<ViewModels.ColorCreateViewModel, Models.Color>();
+            CreateMap<ViewModels.ColorFormulViewModel, Models.ColorFormul>().ReverseMap();
+            CreateMap<ViewModels.ColorFormulEditViewModel, Models.ColorFormul>().ReverseMap();
 
 
 

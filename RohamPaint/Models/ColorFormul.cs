@@ -6,11 +6,11 @@
 
         public int ColorID { get; set; }
 
-        public string BaseCode { get; set; }
+        public string BaseColor { get; set; }
 
         public float Weight { get; set; }
 
-        public virtual Color Color { get; set; }
+        public Color Color { get; set; }
 
     }
 

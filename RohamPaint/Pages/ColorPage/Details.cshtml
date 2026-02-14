@@ -1,0 +1,113 @@
+﻿@page
+@model RohamPaint.Pages.ColorPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Color</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.Code)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.Code)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.Comment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.Comment)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.Lock)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.Lock)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.LastUpdate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.LastUpdate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.Accuracy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.Accuracy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.Usage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.Usage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.Base)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.Base)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.Car)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.Car)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.ColorType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.ColorType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color.Unit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color.Unit)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Color.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+
+@if (Model.Color.Formuls.Any())
+{
+    <div>
+        <a asp-page="./FormulPage/Create" asp-route-ColorId="@Model.Color.ID">Add</a> |
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Color.Formuls[0].BaseColor)</th>
+                    <th>@Html.DisplayNameFor(model => model.Color.Formuls[0].Weight)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Color.Formuls)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.BaseColor)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Weight)</td>
+                        <td>
+                            <a asp-page="./FormulPage/Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-page="./FormulPage/Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+

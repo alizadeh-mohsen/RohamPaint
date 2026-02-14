@@ -12,12 +12,12 @@
 
         public string? Comment { get; set; }
 
-        public bool Lock { get; set; }
-        public DateTime LastUpdate { get; set; }
+        public bool Lock { get; set; } = false;
+        public DateTime LastUpdate { get; set; } = DateTime.Today;
 
         public int? UnitId { get; set; }
 
-        public short Accuracy { get; set; }
+        public byte Accuracy { get; set; }
         public string? Usage { get; set; }
 
         public int? BaseId { get; set; }
@@ -29,6 +29,8 @@
         public virtual ColorType ColorType { get; set; } = null!;
 
         public virtual Unit Unit { get; set; }
+
+        public ICollection<ColorFormul> Formuls { get; set; }
 
 
     }

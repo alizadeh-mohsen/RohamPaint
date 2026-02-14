@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Modelhelper;
 using RohamPaint.ViewModels;
 
-namespace RohamPaint.Pages.FormulPage
+namespace RohamPaint.Pages.ColorPage
 {
     public class IndexModel : PageModel
     {
@@ -14,26 +14,39 @@ namespace RohamPaint.Pages.FormulPage
         {
             _context = context;
         }
-        public MetaData MetaData { get; set; } = default!;
+        public MetaData MetaData { get; set; }
 
-        public IList<ColorViewModel> Colors { get; set; } = default!;
+        public IList<ColorViewModel> Colors { get; set; }
 
         public async Task OnGetAsync([FromQuery] QueryParams queryParams, string? search)
         {
             try
             {
-                var query = _context.Color.AsNoTracking()
-                .Select(c => new ColorViewModel
+                if (string.IsNullOrWhiteSpace(search) && queryParams.PageNumber <= 1)
                 {
-                    ID = c.Id,
-                    Code = c.Code,
-                    Make = c.Car.Name,
-                    ColorType = c.ColorType.Type,
-                    Comment = c.Comment,
-                    LastUpdate = c.LastUpdate,
-                    Unit = c.Unit.Name
+                    // Initialize empty result set
+                    Colors = new List<ColorViewModel>();
+                    MetaData = new MetaData
+                    {
+                        CurrentPage = 1,
+                        PageSize = queryParams.PageSize,
+                        TotalCount = 0,
+                        TotalPages = 0
+                    };
+                    return;
+                }
 
-                });
+                var query = _context.Color.AsNoTracking()
+                    .Select(c => new ColorViewModel
+                    {
+                        ID = c.Id,
+                        Code = c.Code,
+                        Make = c.Car.Name,
+                        ColorType = c.ColorType.Type,
+                        Comment = c.Comment,
+                        LastUpdate = c.LastUpdate,
+                        Unit = c.Unit.Name
+                    });
 
                 query = query.OrderBy(c => c.Code);
 
@@ -50,14 +63,11 @@ namespace RohamPaint.Pages.FormulPage
                 var colors = await PagedList<ColorViewModel>.ToPagedList(query, queryParams.PageNumber, queryParams.PageSize);
                 MetaData = colors.MetaData;
                 Colors = colors;
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
     }
 }

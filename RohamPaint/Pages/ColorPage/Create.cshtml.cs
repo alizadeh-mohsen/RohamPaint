@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RohamPaint.ViewModels;
 
-namespace RohamPaint.Pages.FormulPage
+namespace RohamPaint.Pages.ColorPage
 {
     public class CreateModel : PageModel
     {
@@ -51,7 +51,7 @@ namespace RohamPaint.Pages.FormulPage
                     var colorFormul = new Models.ColorFormul
                     {
                         ColorID = color.Id,
-                        BaseCode = formul.BaseCode,
+                        BaseColor = formul.BaseColor,
                         Weight = formul.Weight
                     };
 
