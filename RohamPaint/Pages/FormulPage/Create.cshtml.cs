@@ -11,56 +11,62 @@ namespace RohamPaint.Pages.FormulPage
         private readonly Data.ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
+
+        [BindProperty]
+        public ColorCreateViewModel ColorCreateViewModel { get; set; } = new();
+
         public CreateModel(Data.ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
+            ColorCreateViewModel = new ColorCreateViewModel(); // Add this line
         }
 
         public IActionResult OnGet()
         {
             ViewData["BaseId"] = new SelectList(_context.Base, "Id", "Name");
-            ViewData["CarId"] = new SelectList(_context.Car, "Id", "Make");
+            ViewData["CarId"] = new SelectList(_context.Car, "Id", "Name");
             ViewData["ColorTypeId"] = new SelectList(_context.ColorType, "Id", "Type");
             ViewData["UnitId"] = new SelectList(_context.Unit, "Id", "Name");
-            ColorCreateViewModel.Formuls.Add(new Models.ColorFormul()); // Add an initial empty formul for the form
+            ColorCreateViewModel.Formuls.Add(new());
             return Page();
         }
 
-        [BindProperty]
-        public ColorCreateViewModel ColorCreateViewModel { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return Page();
-            }
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
 
-            var color = _mapper.Map<Models.Color>(ColorCreateViewModel);
+                var color = _mapper.Map<Models.Color>(ColorCreateViewModel);
 
-            _context.Color.Add(color);
-            await _context.SaveChangesAsync();
+                _context.Color.Add(color);
+                await _context.SaveChangesAsync();
 
-            foreach (var formul in ColorCreateViewModel.Formuls)
-            {
-                    var colorFormul = new  Models.ColorFormul
+                foreach (var formul in ColorCreateViewModel.Formuls)
+                {
+                    var colorFormul = new Models.ColorFormul
                     {
                         ColorID = color.Id,
                         BaseCode = formul.BaseCode,
                         Weight = formul.Weight
                     };
 
+                    _context.ColorFormul.Add(colorFormul);
 
-                    _context.ColorFormul.Add(formul);
-                
+                }
+
+                _context.SaveChanges();
+
+                return RedirectToPage("./Index");
             }
-
-            _context.SaveChanges();
-
-
-            return RedirectToPage("./Index");
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
     }

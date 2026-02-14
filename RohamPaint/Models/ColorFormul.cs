@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace RohamPaint.Models
+﻿namespace RohamPaint.Models
 {
     public class ColorFormul
     {
@@ -8,11 +6,10 @@ namespace RohamPaint.Models
 
         public int ColorID { get; set; }
 
-        public int BaseCode { get; set; }
+        public string BaseCode { get; set; }
 
         public float Weight { get; set; }
 
-        // Navigation properties
         public virtual Color Color { get; set; }
 
     }
