@@ -109,7 +109,7 @@
             </tbody>
         </table>
 
-        <div id="easyMixDiv" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9;">
+     @*    <div id="easyMixDiv" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9;">
             <h4>Easy Mix</h4>
             <form method="post" asp-page-handler="EasyMix" id="easyMixForm">
                 <input type="hidden" id="formulId" name="formulId" />
@@ -133,7 +133,41 @@
                 <button type="button" class="btn btn-secondary" onclick="hideEasyMix()">Cancel</button>
             </form>
         </div>
-    </div>
+    *@ 
+
+    <!-- The form that triggers htmx -->
+        <div id="easyMixDiv" style="display:none">
+            <form id="easyMixForm">
+                <input type="hidden" id="formulId" name="formulId" />
+                <input type="hidden" name="colorId" value="@Model.Color.ID" />
+                <input type="text" id="baseColor" name="baseColor" class="form-control" readonly />
+                <input type="text" id="weight" name="weight" class="form-control" />
+                <input type="checkbox" id="isGram" name="isGram" checked /> Gram
+
+                <button hx-post="?handler=Mix"
+                        hx-target="#formuls-tbody"
+                        hx-swap="outerHTML"
+                        hx-include="#easyMixForm"
+                        class="btn btn-primary">
+                    Easy Mix
+                </button>
+            </form>
+        </div>
+
+        <!-- The table — htmx will replace tbody after the POST -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Base Color</th>
+                    <th>Weight</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <partial name="_FormulsTable" model="Model.Color.Formuls" />
+        </table>
+
+
+</div>
 
 }
 

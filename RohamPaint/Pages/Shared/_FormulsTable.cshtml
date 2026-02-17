@@ -1,0 +1,12 @@
+﻿@using RohamPaint.ViewModels
+@model List<ColorFormulViewModel>
+
+<tbody id="formuls-tbody">
+    @foreach (var item in Model)
+    {
+        <tr id="row-@item.Id">
+            <td>@item.BaseColor</td>
+            <td class="weight-cell">@item.Weight</td>
+        </tr>
+    }
+</tbody>
