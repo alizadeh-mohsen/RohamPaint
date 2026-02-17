@@ -1,6 +1,7 @@
 ﻿@page
 @model RohamPaint.Pages.ColorPage.DetailsModel
-
+@Html.AntiForgeryToken()
+<script src="/path/to/htmx.min.js"></script>
 @{
     ViewData["Title"] = "Details";
 }
@@ -84,7 +85,6 @@
 {
     <div>
         <a asp-page="./FormulPage/Create" asp-route-ColorId="@Model.Color.ID">Add</a> |
-
         <table class="table">
             <thead>
                 <tr>
@@ -96,18 +96,88 @@
             <tbody>
                 @foreach (var item in Model.Color.Formuls)
                 {
-                    <tr>
+                    <tr id="row-@item.Id">
                         <td>@Html.DisplayFor(modelItem => item.BaseColor)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Weight)</td>
+                        <td class="weight-cell">@Html.DisplayFor(modelItem => item.Weight)</td>
                         <td>
                             <a asp-page="./FormulPage/Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-page="./FormulPage/Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-page="./FormulPage/Delete" asp-route-id="@item.Id">Delete</a> |
+                            <a href="#" onclick="showEasyMix('@item.Id', '@item.BaseColor', '@item.Weight'); return false;">Easy Mix</a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+
+        <div id="easyMixDiv" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9;">
+            <h4>Easy Mix</h4>
+            <form method="post" asp-page-handler="EasyMix" id="easyMixForm">
+                <input type="hidden" id="formulId" name="formulId" />
+                <input type="hidden" id="colorId" value="@Model.Color.ID" name="colorId" />
+                <div class="form-group">
+                    <label for="baseColor">Base Color:</label>
+                    <input type="text" id="baseColor" name="baseColor" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight:</label>
+                    <input type="text" id="weight" name="weight" class="form-control" />
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" checked id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Gram
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary" asp-page-handler="Mix" asp-route-weight=>Easy Mix</button>
+                <button id="btnAjax" type="button">Run AJAX Action</button>
+                <button type="button" class="btn btn-secondary" onclick="hideEasyMix()">Cancel</button>
+            </form>
+        </div>
     </div>
+
 }
 
+@section Scripts {
+    <script src="/path/to/htmx.min.js"></script>
+    <script>
+        function showEasyMix(id, baseColor, weight) {
+            document.getElementById('formulId').value = id;
+            document.getElementById('baseColor').value = baseColor;
+            document.getElementById('weight').value = weight;
+            document.getElementById('easyMixDiv').style.display = 'block';
+        }
 
+        function hideEasyMix() {
+            document.getElementById('easyMixDiv').style.display = 'none';
+            document.getElementById('baseColor').value = '';
+            document.getElementById('weight').value = '';
+        }
+
+        document.getElementById("btnAjax").addEventListener("click", () => {
+            console.log('clicked');
+
+            const payload = {
+                colorId:document.getElementById('colorId').value,
+                id: document.getElementById('formulId').value,
+                newWeight: document.getElementById('weight').value,
+                isGram:document.getElementById('flexCheckDefault').checked,
+
+            };
+            console.log(payload);
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            fetch("?handler=Mix", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "RequestVerificationToken": token
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(r => r.json())
+            .then(data => console.log(data));
+        });
+    </script>
+
+
+}

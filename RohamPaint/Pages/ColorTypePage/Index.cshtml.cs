@@ -4,10 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Data;
 using RohamPaint.Modelhelper;
 using RohamPaint.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RohamPaint.Pages.ColorTypePage
 {
@@ -22,7 +18,7 @@ namespace RohamPaint.Pages.ColorTypePage
 
         public MetaData MetaData { get; set; } = default!;
 
-        public IList<ColorType> ColorType { get;set; } = default!;
+        public IList<ColorType> ColorType { get; set; } = default!;
 
         public async Task OnGetAsync([FromQuery] QueryParams queryParams, string? search)
         {

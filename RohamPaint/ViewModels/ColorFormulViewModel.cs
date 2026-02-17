@@ -6,5 +6,6 @@
         public string BaseColor { get; set; }
 
         public float Weight { get; set; }
+
     }
 }
