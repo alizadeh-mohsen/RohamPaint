@@ -1,5 +1,5 @@
 ﻿@using RohamPaint.ViewModels
-@model List<ColorFormulViewModel>
+@* @model List<ColorFormulViewModel>
 
 <tbody id="formuls-tbody">
     @foreach (var item in Model)
@@ -14,4 +14,26 @@
             </td>
         </tr>
     }
+</tbody> *@
+
+
+@model FormulsTableViewModel
+
+<tbody id="formuls-tbody">
+    @foreach (var item in Model.Formuls)
+    {
+        <tr id="row-@item.Id">
+            <td>@item.BaseColor</td>
+            <td class="weight-cell">@item.Weight</td>
+            <td>
+                <a asp-page="./FormulPage/Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./FormulPage/Delete" asp-route-id="@item.Id">Delete</a> |
+                <a href="#" onclick="showEasyMix('@item.Id', '@item.BaseColor', '@item.Weight'); return false;">Easy Mix</a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td><strong>Total</strong></td>
+        <td><strong>@Model.TotalWeight</strong></td>
+    </tr>
 </tbody>

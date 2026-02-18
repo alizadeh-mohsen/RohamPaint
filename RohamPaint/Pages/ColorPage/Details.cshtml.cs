@@ -109,7 +109,11 @@ namespace RohamPaint.Pages.ColorPage
             Color.Formuls = formuls;
             TotalWeight = total.ToString();
 
-            return Partial("_FormulsTable", formuls);
+            //return Partial("_FormulsTable", formuls);
+            return Partial("_FormulsTable", new FormulsTableViewModel
+            {
+                Formuls = formuls
+            });
         }
 
         private List<ColorFormulViewModel> MapToViewModel(IEnumerable<ColorFormul> formuls) =>

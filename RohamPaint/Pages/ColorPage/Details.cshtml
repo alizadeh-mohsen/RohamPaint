@@ -1,4 +1,5 @@
 ﻿@page
+@using RohamPaint.ViewModels
 @model RohamPaint.Pages.ColorPage.DetailsModel
 @Html.AntiForgeryToken()
 <script src="/path/to/htmx.min.js"></script>
@@ -111,10 +112,9 @@
 
                 }
             </tbody> *@
-            <partial name="_FormulsTable" model="Model.Color.Formuls" />
-
+            @* <partial name="_FormulsTable" model="Model.Color.Formuls" /> *@
+            <partial name="_FormulsTable" model="new FormulsTableViewModel { Formuls = Model.Color.Formuls }" />
         </table>
-        <div> Total weight:@Model.TotalWeight </div>
 
     <!-- The form that triggers htmx -->
         <div id="easyMixDiv" style="display:none">
