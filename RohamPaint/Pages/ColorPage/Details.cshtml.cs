@@ -1,11 +1,8 @@
-﻿using Humanizer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RohamPaint.Models;
 using RohamPaint.ViewModels;
-using System.Text;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace RohamPaint.Pages.ColorPage
 {
@@ -16,8 +13,6 @@ namespace RohamPaint.Pages.ColorPage
         [BindProperty]
         public ColorDetailsViewModel Color { get; set; } = default!;
 
-
-        [BindProperty]
         public string TotalWeight { get; set; } = default!;
 
         //[BindProperty]
@@ -59,7 +54,7 @@ namespace RohamPaint.Pages.ColorPage
 
                       }).OrderBy(f => f.BaseColor).ToList()
                   }).FirstOrDefaultAsync();
-
+            TotalWeight = color.Formuls.Sum(f => f.Weight).ToString();
 
             if (color == null)
             {
@@ -80,59 +75,6 @@ namespace RohamPaint.Pages.ColorPage
             public bool IsGram { get; set; }
         }
 
-
-        //public JsonResult OnPostMix([FromBody] RequestModel data)
-        //{
-        //    int formulId = int.Parse(data.Id);
-        //    int colorId = int.Parse(data.ColorId);
-
-        //    var color = _context.Color.Include(c => c.Formuls).FirstOrDefault(c => c.Id == colorId);
-
-        //    var total = 0f;
-        //    if (string.IsNullOrEmpty(data.NewWeight.Trim()))
-        //    {
-        //        return new JsonResult(new { ok = true });
-        //    }
-        //    var newValue = float.Parse(data.NewWeight);
-        //    var oldValue = color.Formuls.FirstOrDefault(c => c.ID == formulId).Weight;
-        //    var rate = newValue / oldValue;
-        //    List<ColorFormulViewModel> formuls = new List<ColorFormulViewModel>();
-        //    foreach (var formul in color.Formuls)
-        //    {
-        //        if (formul.ID == formulId)
-        //        {
-        //            formul.Weight = newValue;
-        //        }
-        //        else
-        //        {
-        //            formul.Weight = (float)(data.IsGram ?
-        //                Math.Round(formul.Weight * rate, 1) :
-        //                Math.Round(formul.Weight * rate, 2));
-        //        }
-
-        //        formuls.Add(new ColorFormulViewModel
-        //        {
-        //            Id = formul.ID,
-        //            BaseColor = formul.BaseColor,
-        //            Weight = formul.Weight
-        //        });
-
-
-        //        total += formul.Weight;
-        //    }
-        //    Color.Formuls = formuls;
-        //    TotalWeight = total.ToString();
-        //    return
-
-        //    //for (int i = 0; i < ColorFormuls.Count; i++)
-        //    //{
-        //    //    lstWeight.Items[i] = lblUnit.Text.ToLower().Contains("gr") ?
-        //    //        Math.Round(float.Parse(lstWeight.Items[i].ToString()) * rate, 1) :
-        //    //        Math.Round(float.Parse(lstWeight.Items[i].ToString()) * rate, 2);
-        //    //    total += float.Parse(lstWeight.Items[i].ToString());
-        //    //}
-        //    //lblTotal.Text = string.Format(Helper.NumberFormatInfo, total);
-        //}
 
         public PartialViewResult OnPostMix(int formulId, int colorId, string weight, bool isGram)
         {
@@ -166,8 +108,8 @@ namespace RohamPaint.Pages.ColorPage
             }
             Color.Formuls = formuls;
             TotalWeight = total.ToString();
-            // Return just the partial — htmx swaps it into the page
-            return Partial("_FormulsTable", MapToViewModel(color.Formuls));
+
+            return Partial("_FormulsTable", formuls);
         }
 
         private List<ColorFormulViewModel> MapToViewModel(IEnumerable<ColorFormul> formuls) =>

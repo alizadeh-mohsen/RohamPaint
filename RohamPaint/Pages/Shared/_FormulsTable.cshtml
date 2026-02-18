@@ -7,6 +7,11 @@
         <tr id="row-@item.Id">
             <td>@item.BaseColor</td>
             <td class="weight-cell">@item.Weight</td>
+            <td>
+                <a asp-page="./FormulPage/Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./FormulPage/Delete" asp-route-id="@item.Id">Delete</a> |
+                <a href="#" onclick="showEasyMix('@item.Id', '@item.BaseColor', '@item.Weight'); return false;">Easy Mix</a>
+            </td>
         </tr>
     }
 </tbody>
