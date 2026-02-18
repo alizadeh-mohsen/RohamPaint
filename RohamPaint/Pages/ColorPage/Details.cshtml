@@ -9,9 +9,16 @@
 
 <h1>Details</h1>
 
+
+
+
 <div>
     <h4>Color</h4>
     <hr />
+    <form method="post">
+        <button type="submit" class="btn btn-primary" asp-page-handler="PrintFormul">Print Formul</button>
+        <button type="submit" class="btn btn-primary" asp-page-handler="PrintLabel">Print Label</button>
+    </form>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Color.Code)
@@ -85,7 +92,7 @@
 @if (Model.Color.Formuls.Any())
 {
     <div>
-        <a asp-page="./FormulPage/Create" asp-route-ColorId="@Model.Color.ID">Add</a> |
+        <a asp-page="./FormulPage/Create" asp-route-ColorId="@Model.Color.ID">Add Base Color</a> |
         <table class="table">
             <thead>
                 <tr>
@@ -94,29 +101,8 @@
                     <th></th>
                 </tr>
             </thead>
-        @*     <tbody>
-                @foreach (var item in Model.Color.Formuls)
-                {
-                    <tr id="row-@item.Id">
-                        <td>@Html.DisplayFor(modelItem => item.BaseColor)</td>
-                        <td class="weight-cell">@Html.DisplayFor(modelItem => item.Weight)</td>
-                        <td>
-                            <a asp-page="./FormulPage/Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-page="./FormulPage/Delete" asp-route-id="@item.Id">Delete</a> |
-                            <a href="#" onclick="showEasyMix('@item.Id', '@item.BaseColor', '@item.Weight'); return false;">Easy Mix</a>
-                        </td>
-                    </tr>
-
-
-
-
-                }
-            </tbody> *@
-            @* <partial name="_FormulsTable" model="Model.Color.Formuls" /> *@
             <partial name="_FormulsTable" model="new FormulsTableViewModel { Formuls = Model.Color.Formuls }" />
         </table>
-
-    <!-- The form that triggers htmx -->
         <div id="easyMixDiv" style="display:none">
             <form id="easyMixForm" method="post">
                 <input type="hidden" id="formulId" name="formulId" />
@@ -136,22 +122,26 @@
                 </button>
             </form>
         </div>
-
-        <!-- The table — htmx will replace tbody after the POST -->
-      @*   <table class="table">
-            <thead>
-                <tr>
-                    <th>Base Color</th>
-                    <th>Weight</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <partial name="_FormulsTable" model="Model.Color.Formuls" />
-        </table>
- *@
-
-</div>
-
+        <div id="changeBaseDiv" style="display:none">
+            <form id="changeBaseForm" method="post">
+                <input type="hidden" id="formulId" name="formulId" />
+                <input type="hidden" name="colorId" value="@Model.Color.ID" />
+                <div> <input type="text" id="weight" name="weight" class="form-control" /></div>
+                <div> <input type="checkbox" id="isGram" name="isGram" checked /> Gram</div>
+                <div>
+                    <button type="button"
+                            hx-post="?handler=ChangeBaseWeight"
+                            hx-target="#formuls-tbody"
+                            hx-swap="outerHTML"
+                            hx-include="#changeBaseForm"
+                            hx-on::after-request="document.getElementById('changeBaseDiv').style.display='none'"
+                            class="btn btn-primary">
+                        Calculate
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 }
 
 @section Scripts {
@@ -168,6 +158,21 @@
             document.getElementById('baseColor').value = '';
             document.getElementById('weight').value = '';
         }
+        function showChangeBase(id, baseColor, weight) {
+            document.getElementById('formulId').value = id;
+            document.getElementById('baseColor').value = baseColor;
+            document.getElementById('weight').value = weight;
+            document.getElementById('changeBaseDiv').style.display = 'block';
+        }
+
+        function hideChangeBase() {
+            document.getElementById('changeBaseDiv').style.display = 'none';
+            document.getElementById('baseColor').value = '';
+            document.getElementById('weight').value = '';
+        }
+
+
+
 
         document.getElementById("btnAjax").addEventListener("click", () => {
             console.log('clicked');
