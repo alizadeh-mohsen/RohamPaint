@@ -7,14 +7,16 @@
     var end = start == 0 ? 0 : start + (Model.Base?.Count ?? 0) - 1;
 }
 
-<h1>Index</h1>
+<h1>Base</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-primary" asp-page="Create">Create New</a>
+
+
 </p>
 <form method="get" class="row g-3 mb-4">
     <div class="col-md-10">
-        <input type="text" name="search" class="form-control" placeholder="Search by name, email, or phone..." value="@ViewContext.HttpContext.Request.Query["search"]" />
+        <input type="text" name="search" class="form-control" placeholder="Search by name" value="@ViewContext.HttpContext.Request.Query["search"]" />
     </div>
     <div class="col-md-2">
         <button type="submit" class="btn btn-primary w-100">Search</button>
@@ -45,17 +47,13 @@
 }
     </tbody>
 </table>
-<div class="d-flex justify-content-between align-items-center mt-3">
-    <div>
-        <strong>Showing</strong> @start - @end <strong>of</strong> @Model.MetaData.TotalCount
-    </div>
-
+<div class="d-flex flex-column gap-2 align-items-center mt-3">
     <div class="d-flex align-items-center">
         <form method="get" class="me-3">
             <label for="pageSize" class="form-label visually-hidden">Page size</label>
             <select id="pageSize" name="pageSize" class="form-select" onchange="this.form.submit()">
                 @{
-                    var sizes = new[] { 10, 20, 50 };
+                    var sizes = new[] { 5, 10, 20, 50 };
                 }
                 @foreach (var s in sizes)
                 {
@@ -90,5 +88,8 @@
                 </li>
             </ul>
         </nav>
+    </div>
+    <div>
+        <strong>Showing</strong> @start - @end <strong>of</strong> @Model.MetaData.TotalCount
     </div>
 </div>
