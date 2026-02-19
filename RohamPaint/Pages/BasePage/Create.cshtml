@@ -9,8 +9,8 @@
 
 <h4>Base</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div >
+    <div col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -19,15 +19,14 @@
                 <span asp-validation-for="Base.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary mt-2" />
+                <a asp-page="Index" class="btn btn-secondary mt-2 ">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

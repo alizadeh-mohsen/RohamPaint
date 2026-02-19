@@ -17,7 +17,7 @@ namespace RohamPaint.Pages.CarPage
 
         public IndexModel(ApplicationDbContext context)
         {
-            _context = context;
+            _context = context; 
         }
 
         public MetaData MetaData { get; set; } = default!;
@@ -26,6 +26,7 @@ namespace RohamPaint.Pages.CarPage
 
         public async Task OnGetAsync([FromQuery] QueryParams queryParams, string? search)
         {
+            
             var query = _context.Car.AsQueryable().AsNoTracking();
             query = query.OrderBy(c => c.Name);
             if (!string.IsNullOrWhiteSpace(search))
