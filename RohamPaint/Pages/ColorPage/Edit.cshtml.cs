@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using RohamPaint.Data;
 using RohamPaint.Models;
 
 namespace RohamPaint.Pages.ColorPage
@@ -30,16 +25,16 @@ namespace RohamPaint.Pages.ColorPage
                 return NotFound();
             }
 
-            var color =  await _context.Color.FirstOrDefaultAsync(m => m.Id == id);
+            var color = await _context.Color.FirstOrDefaultAsync(m => m.Id == id);
             if (color == null)
             {
                 return NotFound();
             }
             Color = color;
-           ViewData["BaseId"] = new SelectList(_context.Base, "Id", "Id");
-           ViewData["CarId"] = new SelectList(_context.Car, "Id", "Id");
-           ViewData["ColorTypeId"] = new SelectList(_context.ColorType, "Id", "Id");
-           ViewData["UnitId"] = new SelectList(_context.Unit, "Id", "Id");
+            ViewData["BaseId"] = new SelectList(_context.Base.OrderBy(c => c.Name), "Id", "Name");
+            ViewData["CarId"] = new SelectList(_context.Car.OrderBy(c => c.Name), "Id", "Name");
+            ViewData["ColorTypeId"] = new SelectList(_context.ColorType.OrderBy(c => c.Type), "Id", "Type");
+            ViewData["UnitId"] = new SelectList(_context.Unit.OrderBy(c => c.Name), "Id", "Name");
             return Page();
         }
 

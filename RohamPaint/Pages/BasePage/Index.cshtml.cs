@@ -16,14 +16,14 @@ namespace RohamPaint.Pages.BasePage
             _context = context;
         }
 
-        public IList<Base> Base { get;set; } = default!;
+        public IList<Base> Base { get; set; } = default!;
 
         public MetaData MetaData { get; set; } = default!;
 
         public async Task OnGetAsync([FromQuery] QueryParams queryParams, string? search)
         {
             var query = _context.Base.AsQueryable().AsNoTracking();
-            query = query.OrderBy(c => c.Id);
+            query = query.OrderBy(c => c.Name);
             if (!string.IsNullOrWhiteSpace(search))
             {
                 string lowerSearch = search.ToLower();

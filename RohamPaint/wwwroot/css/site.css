@@ -1,22 +1,31 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+        font-weight: 600; /* normal weight for larger screens */
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 60px;
+}
+
+label {
+    display: inline-block; /* ensures margin works consistently */
+    font-weight: 600; /* strong but not shouting */
+    font-size: 0.95rem; /* slightly smaller than body text */
+    color: #333; /* high contrast, not pure black */
+    margin-bottom: 0.35rem; /* breathing room above inputs */
+    line-height: 1.3; /* improves readability */
+    cursor: pointer; /* UX: clicking label focuses input */
 }

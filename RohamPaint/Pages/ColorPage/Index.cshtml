@@ -38,13 +38,13 @@ else
     <table class="table ">
         <thead>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.Colors[0].Code)</th>
-                <th>@Html.DisplayNameFor(model => model.Colors[0].Make)</th>
-                <th>@Html.DisplayNameFor(model => model.Colors[0].ColorType)</th>
-                <th>@Html.DisplayNameFor(model => model.Colors[0].Comment)</th>
-                <th>@Html.DisplayNameFor(model => model.Colors[0].Usage)</th>
-                <th>@Html.DisplayNameFor(model => model.Colors[0].LastUpdate)</th>
-                <th>@Html.DisplayNameFor(model => model.Colors[0].Unit)</th>
+                <th>Code</th>
+                <th>Make</th>
+                <th>ColorType</th>
+                <th>Comment</th>
+                <th>Usage</th>
+                <th>LastUpdate</th>
+                <th>Unit</th>
                 <th></th>
             </tr>
         </thead>
@@ -52,13 +52,13 @@ else
             @foreach (var item in Model.Colors)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Code)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Make)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ColorType)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Comment)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Usage)</td>
-                    <td>@Html.DisplayFor(modelItem => item.LastUpdate)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Unit)</td>
+                    <td>@item.Code</td>
+                    <td>@item.Make</td>
+                    <td>@item.ColorType</td>
+                    <td>@item.Comment</td>
+                    <td>@item.Usage</td>
+                    <td>@item.LastUpdate.ToShortDateString()</td>
+                    <td>@item.Unit</td>
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                         <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

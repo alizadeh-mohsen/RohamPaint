@@ -24,10 +24,10 @@ namespace RohamPaint.Pages.ColorPage
 
         public IActionResult OnGet()
         {
-            ViewData["BaseId"] = new SelectList(_context.Base, "Id", "Name");
-            ViewData["CarId"] = new SelectList(_context.Car, "Id", "Name");
-            ViewData["ColorTypeId"] = new SelectList(_context.ColorType, "Id", "Type");
-            ViewData["UnitId"] = new SelectList(_context.Unit, "Id", "Name");
+            ViewData["BaseId"] = new SelectList(_context.Base.OrderBy(c => c.Name), "Id", "Name");
+            ViewData["CarId"] = new SelectList(_context.Car.OrderBy(c => c.Name), "Id", "Name");
+            ViewData["ColorTypeId"] = new SelectList(_context.ColorType.OrderBy(c => c.Type), "Id", "Type");
+            ViewData["UnitId"] = new SelectList(_context.Unit.OrderBy(c => c.Name), "Id", "Name");
             ColorCreateViewModel.Formuls.Add(new());
             return Page();
         }

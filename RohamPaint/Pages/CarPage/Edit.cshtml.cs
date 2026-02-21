@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using RohamPaint.Data;
 using RohamPaint.Models;
 
 namespace RohamPaint.Pages.CarPage
@@ -30,7 +24,7 @@ namespace RohamPaint.Pages.CarPage
                 return NotFound();
             }
 
-            var make =  await _context.Car.FirstOrDefaultAsync(m => m.Id == id);
+            var make = await _context.Car.FirstOrDefaultAsync(m => m.Id == id);
             if (make == null)
             {
                 return NotFound();

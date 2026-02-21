@@ -40,7 +40,7 @@ namespace RohamPaint.Pages.ColorPage.FormulPage
             _context.ColorFormul.Add(colorFormul);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
     }
 }
