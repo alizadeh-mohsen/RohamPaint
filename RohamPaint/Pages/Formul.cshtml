@@ -1,0 +1,80 @@
+﻿@page
+@model RohamPaint.Pages.FormulModel
+@{
+    Layout = "_LayoutFront";
+    ViewData["Title"] = "Index";
+    var hasSearched = !string.IsNullOrWhiteSpace(ViewContext.HttpContext.Request.Query["search"]);
+}
+
+<h1>Color</h1>
+<p>
+    <a class="btn btn-primary" asp-page="Create">Create New</a>
+</p>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-10">
+        <input type="text" name="search" class="form-control" placeholder="Search by code, comment, or make..." value="@ViewContext.HttpContext.Request.Query["search"]" />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+    <input type="hidden" name="pageSize" value="@Model.MetaData.PageSize" />
+</form>
+
+@if (!hasSearched)
+{
+   @*  <div class="alert alert-info">
+        Please enter a search term to view results.
+    </div> *@
+}
+else if (Model.Colors?.Count == 0)
+{
+    <div class="alert alert-warning">
+        No results found for your search.
+    </div>
+}
+else
+{
+    <div class="table-responsive" >
+    <table class="table ">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Make</th>
+                <th>ColorType</th>
+                <th>Comment</th>
+                <th>Usage</th>
+                <th>LastUpdate</th>
+                <th>Unit</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Colors)
+            {
+                <tr>
+                    <td>@item.Code</td>
+                    <td>@item.Make</td>
+                    <td>@item.ColorType</td>
+                    <td>@item.Comment</td>
+                    <td>@item.Usage</td>
+                    <td>@item.LastUpdate.ToShortDateString()</td>
+                    <td>@item.Unit</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+    <partial name="_Pagination" model='new RohamPaint.ViewModels.PaginationModel
+                                {
+                                    MetaData = Model.MetaData,
+                                    ItemCount = Model.Colors?.Count ?? 0,
+                                    Search = ViewContext.HttpContext.Request.Query["search"]
+                                }' />
+
+}

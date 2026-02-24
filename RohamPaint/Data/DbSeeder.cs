@@ -21,10 +21,10 @@ namespace RohamPaint.Data
             }
 
             // Get password from configuration (User Secrets in dev, Environment Variables in prod)
-            var adminPassword = "Admin!123";
+            var adminPassword = "Qwerty!1";
 
             // Seed Admin User
-            var adminEmail = "kelarens@gmail.com";
+            var adminEmail = "q@q.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
             if (adminUser == null)
