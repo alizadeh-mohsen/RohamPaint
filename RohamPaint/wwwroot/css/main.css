@@ -1,0 +1,128 @@
+﻿@font-face {
+  font-family: 'Yekan';
+  src: url('../fonts/YekanWeb-Regular.woff') format('woff');
+}
+body {font-family:'Yekan';
+    direction: rtl
+}
+
+/*HEADER*/
+.header{padding:10px 0;}
+.header h1{font-size: 20px;font-weight: bold;}
+.header h5{font-size: 14px;color:#353535;}
+.header img{padding-top:10px;}
+@media (max-width: 768px){col-sm-12{text-align:center !important;}}
+/*NAVBAR*/
+.navbar{background-color:#6666ff;}
+.navbar-nav{padding-right:0;}
+.navbar-nav .nav-link{color: #fff;font-size: 15px;padding-left: 20px;}
+.navbar-nav .nav-link:hover{color:#262626;}
+.navbar-expand-md > .container, .navbar-expand-md > .container-fluid{padding:0;}
+.navbar-toggler-icon {color:#fff;}
+/*CONTENT*/
+.content{padding-top:0px;}
+/*SLIDER*/
+.carousel-caption{    text-shadow: 2px 2px 4px #000000;}
+/*CARD*/
+.card-title{height:48px;}
+.card-text{font-size:14px;color:#565656;direction:rtl;text-align:right}
+.lead{color:#dc3545;}
+/*SECTION*/
+section{width:100%;margin:10px 0;padding:15px 0 50px 0}
+/*SIDEBAR*/
+.sidebar{background-color:#3e3e3e;}
+.sidebar ul{list-style:none;}
+.sidebar ul li a{color:#fff;}
+/*FOOTER*/
+.footer {width: 100%;height: 60px;line-height: 60px;background-color: #d1d1e0; text-align: center}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* stylelint-disable selector-list-comma-newline-after */
+
+.blog-header {
+    line-height: 1;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.blog-header-logo {
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .display-4 {
+        font-size: 3rem;
+    }
+}
+
+.nav-scroller {
+    position: relative;
+    z-index: 2;
+    height: 2.75rem;
+    overflow-y: hidden;
+}
+.nav-scroller a {
+    text-decoration: none;
+}
+
+.nav-scroller .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 1rem;
+    margin-top: -1px;
+    overflow-x: auto;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav-scroller .nav-link {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: .875rem;
+}
+
+.card-img-right {
+    height: 100%;
+    border-radius: 3px 0 0 3px;
+}
+
+.flex-auto {
+    flex: 0 0 auto;
+}
+
+.h-250 { height: 250px; }
+@media (min-width: 768px) {
+    .h-md-250 { height: 250px; }
+}
+
+/* Pagination */
+.blog-pagination {
+    margin-bottom: 4rem;
+}
+.blog-pagination > .btn {
+    border-radius: 2rem;
+}
+
+/*
+ * Blog posts
+ */
+.blog-post {
+    margin-bottom: 4rem;
+}
+.blog-post-title {
+    margin-bottom: .25rem;
+    font-size: 2.5rem;
+}
+.blog-post-meta {
+    margin-bottom: 1.25rem;
+    color: #727272;
+}
+
+.spaced input[type="radio"]
+{
+    margin-right: 20px; /* Or any other value */
+}

@@ -13,8 +13,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services
+    .AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 builder.Services.AddRazorPages();
 // htmx sends token as a header, this tells ASP.NET to look there
 builder.Services.AddAntiforgery(options =>
@@ -31,6 +33,9 @@ app.Use(async (context, next) =>
         new CookieOptions { HttpOnly = false }); // false so JS can read it
     await next(context);
 });
+
+await ApplyMigrationsAsync(app);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -40,6 +45,7 @@ else
 {
     app.UseExceptionHandler("/Error");
 }
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -47,5 +53,50 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
 app.Run();
+
+//async Task ApplyMigrationsAsync(WebApplication app)
+//{
+//    using var scope = app.Services.CreateScope();
+//    var services = scope.ServiceProvider;
+//    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+//    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+//    var configuration = services.GetRequiredService<IConfiguration>();
+
+//    try
+//    {
+//        await DatabaseSeeder.SeedData(userManager, roleManager, configuration);
+
+//        var context = services.GetRequiredService<ApplicationDbContext>();
+
+//        var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+
+//        if (pendingMigrations.Any())
+//            await context.Database.MigrateAsync();
+//    }
+//    catch (Exception ex)
+//    {
+//        if (app.Environment.IsDevelopment())
+//        {
+//            throw;
+//        }
+//    }
+//}
+
+async Task ApplyMigrationsAsync(WebApplication app)
+{
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+
+    // Ensure DB and Identity tables exist before using UserManager/RoleManager
+    var pending = await context.Database.GetPendingMigrationsAsync();
+    if (pending.Any())
+        await context.Database.MigrateAsync();
+
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var configuration = services.GetRequiredService<IConfiguration>();
+
+    await DatabaseSeeder.SeedData(userManager, roleManager, configuration);
+}
