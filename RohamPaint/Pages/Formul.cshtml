@@ -5,19 +5,31 @@
     ViewData["Title"] = "Formul";
     var currentSearch = ViewContext.HttpContext.Request.Query["search"].ToString();
     var currentPageSize = Model.MetaData?.PageSize ?? 10;
+    Layout = "_LayoutFront";
 }
 
-<h1>Formul</h1>
+<h1>جستجوی رنگ</h1>
 
 <script src="https://unpkg.com/htmx.org@1.9.3"></script>
 
 <form id="searchForm" method="get" class="row g-3 mb-4"
-      hx-get="." hx-trigger="submit" hx-target="#colors-list" hx-swap="innerHTML">
+      hx-get="/Formul?handler=Colors"
+      hx-trigger="submit"
+      hx-target="#colors-list"
+      hx-swap="innerHTML">
     <div class="col-md-10">
-        <input type="text" name="search" class="form-control" placeholder="نام خودرو یا شرکت یا کد رنگ را وارد کنید" value="@currentSearch" />
+        <input type="text" name="search" class="form-control"
+               placeholder="جستجو با کد رنگ نام خودرِو نام شرکت یا کد رنگ"
+               value="@currentSearch" />
     </div>
     <div class="col-md-2">
-        <button type="submit" class="btn btn-primary w-100">Search</button>
+        <button type="submit" class="btn btn-primary w-100"
+                hx-on:htmx:before-request="this.disabled=true; this.querySelector('.spinner-border')?.classList.remove('d-none')"
+                hx-on:htmx:after-on-load="this.disabled=false; this.querySelector('.spinner-border')?.classList.add('d-none')"
+                aria-live="polite">
+            <span class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+            Search
+        </button>
     </div>
     <input type="hidden" name="pageSize" value="@currentPageSize" />
 </form>

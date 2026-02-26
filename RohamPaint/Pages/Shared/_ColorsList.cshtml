@@ -1,4 +1,4 @@
-@model RohamPaint.Modelhelper.PagedList<RohamPaint.ViewModels.ColorViewModel>
+﻿@model RohamPaint.Modelhelper.PagedList<RohamPaint.ViewModels.ColorViewModel>
 
 @{
     var meta = Model.MetaData;
@@ -41,24 +41,28 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Code</th>
-                <th>Make</th>
-                <th>ColorType</th>
-                <th>Comment</th>
+                <th>کد رنگ</th>
+                <th>خودرو/شرکت</th>
+                <th>نوع رنگ</th>
+                @*    <th>Comment</th>
                 <th>LastUpdate</th>
-                <th>Unit</th>
+                <th>Unit</th> *@
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Code</td>
+                    <td>
+                        <a asp-page="/Mixit" asp-route-id="@item.ID">
+                            @item.Code
+                        </a>
+                    </td>
                     <td>@item.Make</td>
                     <td>@item.ColorType</td>
-                    <td>@item.Comment</td>
+                    @*  <td>@item.Comment</td>
                     <td>@item.LastUpdate.ToShortDateString()</td>
-                    <td>@item.Unit</td>
+                    <td>@item.Unit</td> *@
                 </tr>
             }
         </tbody>
@@ -85,7 +89,7 @@
 
         @if (showLeftEllipsis)
         {
-            <li class="page-item disabled"><span class="page-link">�</span></li>
+            <li class="page-item disabled"><span class="page-link">…</span></li>
         }
         else if (startPage == 2)
         {
@@ -106,7 +110,7 @@
 
         @if (showRightEllipsis)
         {
-            <li class="page-item disabled"><span class="page-link">�</span></li>
+            <li class="page-item disabled"><span class="page-link">…</span></li>
         }
         else if (endPage == totalPages - 1)
         {
@@ -134,5 +138,5 @@
 </nav>
 
 <div>
-    <strong>Showing</strong> @start � @end <strong>of</strong> @meta.TotalCount
+    <strong>Showing</strong> @start – @end <strong>of</strong> @meta.TotalCount
 </div>

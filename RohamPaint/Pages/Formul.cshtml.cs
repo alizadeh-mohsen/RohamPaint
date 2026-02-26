@@ -69,8 +69,8 @@ namespace RohamPaint.Pages
                     Comment = c.Comment,
                     LastUpdate = c.LastUpdate,
                     Unit = c.Unit.Name
-                })
-                .OrderBy(c => c.Code);
+                });
+            query = query.OrderBy(c => c.Code);
 
             if (!string.IsNullOrWhiteSpace(search))
             {

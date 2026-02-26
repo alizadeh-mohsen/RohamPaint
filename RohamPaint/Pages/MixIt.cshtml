@@ -10,97 +10,86 @@
 
 <div class="container py-4">
 
-    <h2 class="mb-4">Color Details</h2>
 
     <!-- ── PART 1: Color Info Card ── -->
     <div class="card mb-4 shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Color Information</h5>
-            <form method="post" class="d-flex gap-2 mb-0">
-                <button type="submit" class="btn btn-light btn-sm" asp-page-handler="PrintFormul">Print Formula</button>
-                <button type="submit" class="btn btn-outline-light btn-sm" asp-page-handler="PrintLabel">Print Label</button>
-            </form>
+            <h5 class="mb-0">فرمول رنگ</h5>
+           
         </div>
         <div class="card-body">
             <dl class="row mb-0">
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.Code)</dt>
+                <dt class="col-sm-3">کد رنگ:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.Code)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.Comment)</dt>
+                <dt class="col-sm-3">توضیحات:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.Comment)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.Lock)</dt>
+                <dt class="col-sm-3">نهایی شده؟</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.Lock)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.LastUpdate)</dt>
+                <dt class="col-sm-3">آخرین بروزرسانی:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.LastUpdate)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.Accuracy)</dt>
+                <dt class="col-sm-3">دقت:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.Accuracy)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.Usage)</dt>
+                <dt class="col-sm-3">کاربرد:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.Usage)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.Base)</dt>
+                <dt class="col-sm-3">پایه:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.Base)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.Car)</dt>
+                <dt class="col-sm-3">خودرو/شرکت:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.Car)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.ColorType)</dt>
+                <dt class="col-sm-3">نوع رنگ:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.ColorType)</dd>
 
-                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Color.Unit)</dt>
+                <dt class="col-sm-3">واحد:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.Unit)</dd>
             </dl>
         </div>
-        <div class="card-footer d-flex gap-2">
-            <a class="btn btn-primary btn-sm" asp-page="./Edit" asp-route-id="@Model.Color.ID">Edit</a>
-            <a class="btn btn-secondary btn-sm" asp-page="./Index">Back to List</a>
-        </div>
+     
     </div>
 
     <!-- ── PART 2: Formula Table ── -->
     @if (Model.Color.Formuls.Any())
     {
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            <h5 class="mb-0">Mix Formula</h5>
-            <a class="btn btn-primary btn-sm" asp-page="./FormulPage/Create" asp-route-ColorId="@Model.Color.ID">+ Add Base Color</a>
-        </div>
-
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped align-middle">
                 <thead class="table-secondary">
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.Color.Formuls[0].BaseColor)</th>
-                        <th>@Html.DisplayNameFor(model => model.Color.Formuls[0].Weight)</th>
+                        <th>@Html.DisplayNameFor(model => model.Color.Formuls
+                            [0].Weight)</th>
                         <th></th>
                     </tr>
                 </thead>
-                <partial name="_FormulsTable" model="new FormulsTableViewModel { Formuls = Model.Color.Formuls }" />
+                <partial name="_FormulsTableFront" model="new FormulsTableViewModel { Formuls = Model.Color.Formuls }" />
             </table>
         </div>
 
         <!-- Easy Mix Panel -->
         <div id="easyMixDiv" style="display:none" class="card mb-3 border-primary">
-            <div class="card-header text-primary fw-semibold">Easy Mix</div>
+            <div class="card-header text-primary fw-semibold">تغییر وزن بیس</div>
             <div class="card-body">
                 <form id="easyMixForm" method="post">
                     <input type="hidden" id="formulId" name="formulId" />
                     <input type="hidden" name="colorId" value="@Model.Color.ID" />
                     <div class="row g-2 align-items-end">
                         <div class="col-sm-4">
-                            <label class="form-label small">Base Color</label>
+                            <label class="form-label small">کد رنگ بیس</label>
                             <input type="text" id="baseColor" name="baseColor" class="form-control form-control-sm" readonly />
                         </div>
                         <div class="col-sm-3">
-                            <label class="form-label small">Weight</label>
+                            <label class="form-label small">وزن</label>
                             <input type="text" id="weight" name="weight" class="form-control form-control-sm" />
                         </div>
                         <div class="col-sm-2 d-flex align-items-end pb-1">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="isGram" name="isGram" checked />
-                                <label class="form-check-label small" for="isGram">Gram</label>
+                                <label class="form-check-label small" for="isGram">گرم</label>
                             </div>
                         </div>
                         <div class="col-sm-3 d-flex gap-2">
@@ -111,9 +100,9 @@
                                     hx-include="#easyMixForm"
                                     hx-on::after-request="document.getElementById('easyMixDiv').style.display='none'"
                                     class="btn btn-primary btn-sm">
-                                Easy Mix
+                                تغییر وزن
                             </button>
-                            <button type="button" onclick="hideEasyMix()" class="btn btn-outline-secondary btn-sm">Cancel</button>
+                            <button type="button" onclick="hideEasyMix()" class="btn btn-outline-secondary btn-sm">انصراف</button>
                         </div>
                     </div>
                 </form>
@@ -122,20 +111,20 @@
 
         <!-- Change Base Panel -->
         <div id="changeBaseDiv" style="display:none" class="card mb-3 border-warning">
-            <div class="card-header text-warning fw-semibold">Recalculate Base Weight</div>
+            <div class="card-header text-warning fw-semibold">تغییر وزن پایه</div>
             <div class="card-body">
                 <form id="changeBaseForm" method="post">
                     <input type="hidden" id="formulId" name="formulId" />
                     <input type="hidden" name="colorId" value="@Model.Color.ID" />
                     <div class="row g-2 align-items-end">
                         <div class="col-sm-4">
-                            <label class="form-label small">New Weight</label>
+                            <label class="form-label small">وزن جدید</label>
                             <input type="text" id="weight" name="weight" class="form-control form-control-sm" />
                         </div>
                         <div class="col-sm-2 d-flex align-items-end pb-1">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="isGram" name="isGram" checked />
-                                <label class="form-check-label small" for="isGram">Gram</label>
+                                <label class="form-check-label small" for="isGram">گرم</label>
                             </div>
                         </div>
                         <div class="col-sm-3 d-flex gap-2">
@@ -146,9 +135,9 @@
                                     hx-include="#changeBaseForm"
                                     hx-on::after-request="document.getElementById('changeBaseDiv').style.display='none'"
                                     class="btn btn-warning btn-sm">
-                                Calculate
+                                محاسبه
                             </button>
-                            <button type="button" onclick="hideChangeBase()" class="btn btn-outline-secondary btn-sm">Cancel</button>
+                            <button type="button" onclick="hideChangeBase()" class="btn btn-outline-secondary btn-sm">انصراف</button>
                         </div>
                     </div>
                 </form>

@@ -34,7 +34,7 @@ app.Use(async (context, next) =>
     await next(context);
 });
 
-await ApplyMigrationsAsync(app);
+//await ApplyMigrationsAsync(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

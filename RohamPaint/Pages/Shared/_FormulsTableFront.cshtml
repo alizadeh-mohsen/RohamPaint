@@ -1,0 +1,22 @@
+﻿@using RohamPaint.ViewModels
+@model FormulsTableViewModel
+
+<tbody id="formuls-tbody">
+    @foreach (var item in Model.Formuls)
+    {
+        <tr id="row-@item.Id">
+            <td>@item.BaseColor</td>
+            <td class="weight-cell">@item.Weight</td>
+            <td>
+                <a class="btn btn-primary" href="#" onclick="showEasyMix('@item.Id', '@item.BaseColor', '@item.Weight'); return false;">تغییر وزن بیس</a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td><strong>Total</strong></td>
+        <td><strong>@Model.TotalWeight</strong></td>
+        <td>
+            <a class="btn btn-warning" href="#" onclick="showChangeBase('@Model.TotalWeight'); return false;">تغییر وزن پایه</a>
+        </td>
+    </tr>
+</tbody>

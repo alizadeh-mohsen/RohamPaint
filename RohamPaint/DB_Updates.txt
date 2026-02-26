@@ -43,3 +43,13 @@ Go
 UPDATE Car SET [Name] = [Car];
 Go
 ALTER TABLE Car DROP COLUMN Car;
+
+go
+CREATE NONCLUSTERED INDEX IX_Color_Code
+ON dbo.Color (Code);
+go
+CREATE NONCLUSTERED INDEX IX_Color_CarID
+ON dbo.Color (CarID);
+go
+CREATE NONCLUSTERED INDEX IX_Color_ColorTypeID
+ON dbo.Color (ColorTypeID);
