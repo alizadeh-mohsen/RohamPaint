@@ -1,76 +1,40 @@
 ﻿@page
 @model RohamPaint.Pages.FormulModel
+
 @{
-    Layout = "_LayoutFront";
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Formul";
+    var currentSearch = ViewContext.HttpContext.Request.Query["search"].ToString();
+    var currentPageSize = Model.MetaData?.PageSize ?? 10;
 }
 
-<div class="container">
-    <div class="row">
-        <form method="get" class="row g-3 mb-4">
-            <div class="col-md-10">
-                <input type="text" name="search" class="form-control" 
-                placeholder="جستجو بر اساس نام ماشین یا کد رنگ" 
-                value="@ViewContext.HttpContext.Request.Query["search"]" />
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Search</button>
-            </div>
-            <input type="hidden" name="pageSize" value="@Model.MetaData.PageSize" />
-        </form>
+<h1>Formul</h1>
 
-        @if (Model.Colors?.Count == 0)
+<script src="https://unpkg.com/htmx.org@1.9.3"></script>
+
+<form id="searchForm" method="get" class="row g-3 mb-4"
+      hx-get="." hx-trigger="submit" hx-target="#colors-list" hx-swap="innerHTML">
+    <div class="col-md-10">
+        <input type="text" name="search" class="form-control" placeholder="نام خودرو یا شرکت یا کد رنگ را وارد کنید" value="@currentSearch" />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+    <input type="hidden" name="pageSize" value="@currentPageSize" />
+</form>
+
+<div id="colors-list">
+    @* Server-render initial content. Model.Colors is actually a PagedList at runtime. *@
+    @{
+        var initialPaged = Model.Colors as RohamPaint.Modelhelper.PagedList<RohamPaint.ViewModels.ColorViewModel>;
+        if (initialPaged != null)
         {
-            <div class="alert alert-warning">
-                No results found for your search.
-            </div>
+            @await Html.PartialAsync("_ColorsList", initialPaged)
         }
         else
         {
-            <div class="table-responsive">
-                <table class="table ">
-                    <thead>
-                        <tr>
-                            <th>کد رنگ</th>
-                            <th>خودرو/شرکت</th>
-                            <th>نوع رنگ</th>
-                            @* <th>Comment</th>
-                <th>Usage</th>
-                <th>LastUpdate</th>
-                <th>Unit</th>
-                <th></th> *@
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Colors)
-                        {
-                            <tr>
-                                <td>
-                                    <a asp-page="./Details" asp-route-id="@item.ID">
-                                        @item.Code
-                                    </a>
-                                </td>
-                                <td>@item.Make</td>
-                                <td>@item.ColorType</td>
-                                @*<td>@item.Comment</td>
-                                 <td>@item.Usage</td>
-                                <td>@item.LastUpdate.ToShortDateString()</td>
-                                <td>@item.Unit</td>
-                                <td>
-                                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
-                                </td> *@
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <partial name="_Pagination" model='new RohamPaint.ViewModels.PaginationModel
-                                        {
-                                            MetaData = Model.MetaData,
-                                            ItemCount = Model.Colors?.Count ?? 0,
-                                            Search = ViewContext.HttpContext.Request.Query["search"]
-                                        }' />
-
-                }
-    </div>
+            // show empty list if none
+            var empty = new RohamPaint.Modelhelper.PagedList<RohamPaint.ViewModels.ColorViewModel>(new List<RohamPaint.ViewModels.ColorViewModel>(), 0, 1, currentPageSize);
+            @await Html.PartialAsync("_ColorsList", empty)
+        }
+    }
 </div>

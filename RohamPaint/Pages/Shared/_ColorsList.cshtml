@@ -1,0 +1,138 @@
+@model RohamPaint.Modelhelper.PagedList<RohamPaint.ViewModels.ColorViewModel>
+
+@{
+    var meta = Model.MetaData;
+    var search = Context.Request.Query["search"].ToString();
+    var start = meta.TotalCount == 0 ? 0 : ((meta.CurrentPage - 1) * meta.PageSize) + 1;
+    var end = start == 0 ? 0 : start + Model.Count - 1;
+
+    // paging window (5)
+    var maxPagesToShow = 5;
+    var totalPages = meta.TotalPages;
+    var currentPage = meta.CurrentPage;
+    int startPage, endPage;
+    if (totalPages <= maxPagesToShow)
+    {
+        startPage = 1;
+        endPage = totalPages;
+    }
+    else
+    {
+        var half = maxPagesToShow / 2;
+        startPage = currentPage - half;
+        endPage = currentPage + half;
+        if (startPage < 1)
+        {
+            startPage = 1;
+            endPage = maxPagesToShow;
+        }
+        else if (endPage > totalPages)
+        {
+            endPage = totalPages;
+            startPage = totalPages - maxPagesToShow + 1;
+        }
+    }
+
+    bool showLeftEllipsis = startPage > 2;
+    bool showRightEllipsis = endPage < totalPages - 1;
+}
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Make</th>
+                <th>ColorType</th>
+                <th>Comment</th>
+                <th>LastUpdate</th>
+                <th>Unit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Code</td>
+                    <td>@item.Make</td>
+                    <td>@item.ColorType</td>
+                    <td>@item.Comment</td>
+                    <td>@item.LastUpdate.ToShortDateString()</td>
+                    <td>@item.Unit</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @(!meta.HasPreviousPage ? "disabled" : "")">
+            @{
+                var prevUrl = Url.Page("/Formul", new { handler = "Colors", pageNumber = meta.CurrentPage - 1, pageSize = meta.PageSize, search = search });
+            }
+            <a class="page-link" hx-get="@prevUrl" hx-target="#colors-list" hx-swap="innerHTML">Previous</a>
+        </li>
+
+        @* first page *@
+        @if (startPage > 1)
+        {
+            var url1 = Url.Page("/Formul", new { handler = "Colors", pageNumber = 1, pageSize = meta.PageSize, search = search });
+            <li class="page-item @(1 == currentPage ? "active" : "")">
+                <a class="page-link" hx-get="@url1" hx-target="#colors-list" hx-swap="innerHTML">1</a>
+            </li>
+        }
+
+        @if (showLeftEllipsis)
+        {
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+        }
+        else if (startPage == 2)
+        {
+            var url2 = Url.Page("/Formul", new { handler = "Colors", pageNumber = 2, pageSize = meta.PageSize, search = search });
+            <li class="page-item @(2 == currentPage ? "active" : "")">
+                <a class="page-link" hx-get="@url2" hx-target="#colors-list" hx-swap="innerHTML">2</a>
+            </li>
+        }
+
+        @for (var i = startPage; i <= endPage; i++)
+        {
+            if (i == 1 || i == totalPages) { continue; }
+            var pageUrl = Url.Page("/Formul", new { handler = "Colors", pageNumber = i, pageSize = meta.PageSize, search = search });
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link" hx-get="@pageUrl" hx-target="#colors-list" hx-swap="innerHTML">@i</a>
+            </li>
+        }
+
+        @if (showRightEllipsis)
+        {
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+        }
+        else if (endPage == totalPages - 1)
+        {
+            var penUrl = Url.Page("/Formul", new { handler = "Colors", pageNumber = totalPages - 1, pageSize = meta.PageSize, search = search });
+            <li class="page-item @((totalPages - 1) == currentPage ? "active" : "")">
+                <a class="page-link" hx-get="@penUrl" hx-target="#colors-list" hx-swap="innerHTML">@(totalPages - 1)</a>
+            </li>
+        }
+
+        @if (endPage < totalPages)
+        {
+            var lastUrl = Url.Page("/Formul", new { handler = "Colors", pageNumber = totalPages, pageSize = meta.PageSize, search = search });
+            <li class="page-item @(totalPages == currentPage ? "active" : "")">
+                <a class="page-link" hx-get="@lastUrl" hx-target="#colors-list" hx-swap="innerHTML">@totalPages</a>
+            </li>
+        }
+
+        <li class="page-item @(!meta.HasNextPage ? "disabled" : "")">
+            @{
+                var nextUrl = Url.Page("/Formul", new { handler = "Colors", pageNumber = meta.CurrentPage + 1, pageSize = meta.PageSize, search = search });
+            }
+            <a class="page-link" hx-get="@nextUrl" hx-target="#colors-list" hx-swap="innerHTML">Next</a>
+        </li>
+    </ul>
+</nav>
+
+<div>
+    <strong>Showing</strong> @start – @end <strong>of</strong> @meta.TotalCount
+</div>

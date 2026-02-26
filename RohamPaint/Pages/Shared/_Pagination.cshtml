@@ -1,11 +1,45 @@
 @using RohamPaint.ViewModels
 
 @{
-    var meta   = Model.MetaData;
+    var meta = Model.MetaData;
     var search = Model.Search;
-    var start  = meta.TotalCount == 0 ? 0 : ((meta.CurrentPage - 1) * meta.PageSize) + 1;
-    var end    = start == 0 ? 0 : start + Model.ItemCount - 1;
-    var sizes  = new[] { 5, 10, 20, 50 };
+    var start = meta.TotalCount == 0 ? 0 : ((meta.CurrentPage - 1) * meta.PageSize) + 1;
+    var end = start == 0 ? 0 : start + Model.ItemCount - 1;
+    var sizes = new[] { 5, 10, 20, 50 };
+
+    // Paging window settings
+    var maxPagesToShow = 5;
+    var totalPages = meta.TotalPages;
+    var currentPage = meta.CurrentPage;
+
+    int startPage, endPage;
+
+    if (totalPages <= maxPagesToShow)
+    {
+        startPage = 1;
+        endPage = totalPages;
+    }
+    else
+    {
+        // center window around current page
+        var half = maxPagesToShow / 2;
+        startPage = currentPage - half;
+        endPage = currentPage + half;
+
+        if (startPage < 1)
+        {
+            startPage = 1;
+            endPage = maxPagesToShow;
+        }
+        else if (endPage > totalPages)
+        {
+            endPage = totalPages;
+            startPage = totalPages - maxPagesToShow + 1;
+        }
+    }
+
+    bool showLeftEllipsis = startPage > 2;   // show "1 ..." when gap and also keep page 1 shown
+    bool showRightEllipsis = endPage < totalPages - 1; // show "... last" when gap
 }
 
 <div class="d-flex flex-column gap-2 align-items-center mt-3">
@@ -33,12 +67,44 @@
                     <a class="page-link"
                        asp-route-pageNumber="@(meta.CurrentPage - 1)"
                        asp-route-pageSize="@meta.PageSize"
-                       asp-route-search="@search">Previous</a>
+                       asp-route-search="@search"><<</a>
                 </li>
 
-                @for (var i = 1; i <= meta.TotalPages; i++)
+                @* Always show first page if it's not part of the window *@
+                @if (startPage > 1)
                 {
-                    <li class="page-item @(i == meta.CurrentPage ? "active" : "")">
+                    <li class="page-item @(1 == currentPage ? "active" : "")">
+                        <a class="page-link"
+                           asp-route-pageNumber="1"
+                           asp-route-pageSize="@meta.PageSize"
+                           asp-route-search="@search">1</a>
+                    </li>
+                }
+
+                @* Left ellipsis if needed *@
+                @if (showLeftEllipsis)
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">…</span>
+                    </li>
+                }
+                else if (startPage == 2) // show page 2 when there's no ellipsis but it's outside the computed window
+                {
+                    <li class="page-item @(2 == currentPage ? "active" : "")">
+                        <a class="page-link"
+                           asp-route-pageNumber="2"
+                           asp-route-pageSize="@meta.PageSize"
+                           asp-route-search="@search">2</a>
+                    </li>
+                }
+
+                @* Main window *@
+                @for (var i = startPage; i <= endPage; i++)
+                {
+                    // Skip first and last if already rendered above/below
+                    if (i == 1 || i == totalPages) { continue; }
+
+                    <li class="page-item @(i == currentPage ? "active" : "")">
                         <a class="page-link"
                            asp-route-pageNumber="@i"
                            asp-route-pageSize="@meta.PageSize"
@@ -46,11 +112,39 @@
                     </li>
                 }
 
+                @* Right ellipsis if needed *@
+                @if (showRightEllipsis)
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">…</span>
+                    </li>
+                }
+                else if (endPage == totalPages - 1) // show the penultimate page when no ellipsis
+                {
+                    <li class="page-item @((totalPages - 1) == currentPage ? "active" : "")">
+                        <a class="page-link"
+                           asp-route-pageNumber="@(totalPages - 1)"
+                           asp-route-pageSize="@meta.PageSize"
+                           asp-route-search="@search">@(totalPages - 1)</a>
+                    </li>
+                }
+
+                @* Always show last page if it's not part of the window *@
+                @if (endPage < totalPages)
+                {
+                    <li class="page-item @(totalPages == currentPage ? "active" : "")">
+                        <a class="page-link"
+                           asp-route-pageNumber="@totalPages"
+                           asp-route-pageSize="@meta.PageSize"
+                           asp-route-search="@search">@totalPages</a>
+                    </li>
+                }
+
                 <li class="page-item @(!meta.HasNextPage ? "disabled" : "")">
                     <a class="page-link"
                        asp-route-pageNumber="@(meta.CurrentPage + 1)"
                        asp-route-pageSize="@meta.PageSize"
-                       asp-route-search="@search">Next</a>
+                       asp-route-search="@search">>></a>
                 </li>
 
             </ul>
