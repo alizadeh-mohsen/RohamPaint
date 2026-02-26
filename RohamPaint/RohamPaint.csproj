@@ -19,4 +19,11 @@
     <PackageReference Include="QuestPDF" Version="2026.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Data\Note.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

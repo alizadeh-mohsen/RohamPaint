@@ -1,0 +1,28 @@
+﻿@page
+@model RohamPaint.Pages.NotePage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Notes</h1>
+
+@if (!string.IsNullOrEmpty(Model.StatusMessage))
+{
+    <div class="alert alert-success">@Model.StatusMessage</div>
+}
+
+<form method="post">
+    <div class="mb-3">
+        <textarea asp-for="NoteText" class="form-control" rows="20" dir="rtl"></textarea>
+        <span asp-validation-for="NoteText" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary ">Save</button>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

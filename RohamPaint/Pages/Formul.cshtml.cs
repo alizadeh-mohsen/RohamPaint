@@ -22,20 +22,6 @@ namespace RohamPaint.Pages
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(search) && queryParams.PageNumber <= 1)
-                {
-                    // Initialize empty result set
-                    Colors = new List<ColorViewModel>();
-                    MetaData = new MetaData
-                    {
-                        CurrentPage = 1,
-                        PageSize = queryParams.PageSize,
-                        TotalCount = 0,
-                        TotalPages = 0
-                    };
-                    return;
-                }
-
                 var query = _context.Color.AsNoTracking()
                     .Select(c => new ColorViewModel
                     {
