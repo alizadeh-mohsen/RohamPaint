@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QuestPDF.Fluent;
@@ -7,6 +8,7 @@ using RohamPaint.ViewModels;
 
 namespace RohamPaint.Pages.ColorPage
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;
@@ -68,13 +70,7 @@ namespace RohamPaint.Pages.ColorPage
             return Page();
         }
 
-        public class RequestModel
-        {
-            public string Id { get; set; }
-            public string ColorId { get; set; }
-            public string NewWeight { get; set; }
-            public bool IsGram { get; set; }
-        }
+      
 
 
         public PartialViewResult OnPostMix(int formulId, int colorId, string weight, bool isGram)

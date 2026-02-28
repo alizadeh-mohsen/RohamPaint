@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using RohamPaint.Models;
 
 namespace RohamPaint.Pages.ColorPage
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly RohamPaint.Data.ApplicationDbContext _context;

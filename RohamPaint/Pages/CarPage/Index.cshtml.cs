@@ -1,23 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RohamPaint.Data;
 using RohamPaint.Modelhelper;
 using RohamPaint.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RohamPaint.Pages.CarPage
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
 
         public IndexModel(ApplicationDbContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
         public MetaData MetaData { get; set; } = default!;
@@ -26,7 +24,7 @@ namespace RohamPaint.Pages.CarPage
 
         public async Task OnGetAsync([FromQuery] QueryParams queryParams, string? search)
         {
-            
+
             var query = _context.Car.AsQueryable().AsNoTracking();
             query = query.OrderBy(c => c.Name);
             if (!string.IsNullOrWhiteSpace(search))

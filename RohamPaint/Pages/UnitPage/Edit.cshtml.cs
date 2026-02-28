@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using RohamPaint.Data;
 using RohamPaint.Models;
 
 namespace RohamPaint.Pages.UnitPage
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly RohamPaint.Data.ApplicationDbContext _context;
@@ -30,7 +26,7 @@ namespace RohamPaint.Pages.UnitPage
                 return NotFound();
             }
 
-            var unit =  await _context.Unit.FirstOrDefaultAsync(m => m.Id == id);
+            var unit = await _context.Unit.FirstOrDefaultAsync(m => m.Id == id);
             if (unit == null)
             {
                 return NotFound();

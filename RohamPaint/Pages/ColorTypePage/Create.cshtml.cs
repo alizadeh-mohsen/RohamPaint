@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RohamPaint.Models;
 
 namespace RohamPaint.Pages.ColorTypePage
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly RohamPaint.Data.ApplicationDbContext _context;

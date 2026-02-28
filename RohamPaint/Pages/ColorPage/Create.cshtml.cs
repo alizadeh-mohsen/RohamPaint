@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,6 +7,7 @@ using RohamPaint.ViewModels;
 
 namespace RohamPaint.Pages.ColorPage
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;

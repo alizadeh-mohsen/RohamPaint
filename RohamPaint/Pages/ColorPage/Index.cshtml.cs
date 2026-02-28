@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RohamPaint.Modelhelper;
@@ -6,6 +7,7 @@ using RohamPaint.ViewModels;
 
 namespace RohamPaint.Pages.ColorPage
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;
