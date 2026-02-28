@@ -9,9 +9,9 @@ namespace RohamPaint.Pages.ColorTypePage
     [Authorize]
     public class DeleteModel : PageModel
     {
-        private readonly RohamPaint.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
 
-        public DeleteModel(RohamPaint.Data.ApplicationDbContext context)
+        public DeleteModel(Data.ApplicationDbContext context)
         {
             _context = context;
         }

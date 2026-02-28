@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QuestPDF.Infrastructure;
@@ -13,6 +11,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services
@@ -26,19 +26,6 @@ builder.Services.AddAntiforgery(options =>
     options.HeaderName = "X-XSRF-TOKEN";
 });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .Build();
-});
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/Account/Login";
-    });
-
 var app = builder.Build();
 
 app.Use(async (context, next) =>
@@ -49,8 +36,6 @@ app.Use(async (context, next) =>
         new CookieOptions { HttpOnly = false }); // false so JS can read it
     await next(context);
 });
-
-//await ApplyMigrationsAsync(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -70,35 +55,8 @@ app.UseAuthentication();  // must come before
 app.UseAuthorization();   // this
 
 app.MapRazorPages();
+
 app.Run();
-
-//async Task ApplyMigrationsAsync(WebApplication app)
-//{
-//    using var scope = app.Services.CreateScope();
-//    var services = scope.ServiceProvider;
-//    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-//    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-//    var configuration = services.GetRequiredService<IConfiguration>();
-
-//    try
-//    {
-//        await DatabaseSeeder.SeedData(userManager, roleManager, configuration);
-
-//        var context = services.GetRequiredService<ApplicationDbContext>();
-
-//        var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
-
-//        if (pendingMigrations.Any())
-//            await context.Database.MigrateAsync();
-//    }
-//    catch (Exception ex)
-//    {
-//        if (app.Environment.IsDevelopment())
-//        {
-//            throw;
-//        }
-//    }
-//}
 
 async Task ApplyMigrationsAsync(WebApplication app)
 {

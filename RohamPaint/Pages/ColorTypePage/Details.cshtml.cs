@@ -9,9 +9,9 @@ namespace RohamPaint.Pages.ColorTypePage
     [Authorize]
     public class DetailsModel : PageModel
     {
-        private readonly RohamPaint.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
 
-        public DetailsModel(RohamPaint.Data.ApplicationDbContext context)
+        public DetailsModel(Data.ApplicationDbContext context)
         {
             _context = context;
         }

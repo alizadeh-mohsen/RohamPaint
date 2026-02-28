@@ -8,9 +8,9 @@ namespace RohamPaint.Pages.UnitPage
     [Authorize]
     public class CreateModel : PageModel
     {
-        private readonly RohamPaint.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
 
-        public CreateModel(RohamPaint.Data.ApplicationDbContext context)
+        public CreateModel(Data.ApplicationDbContext context)
         {
             _context = context;
         }

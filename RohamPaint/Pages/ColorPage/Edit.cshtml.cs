@@ -10,9 +10,9 @@ namespace RohamPaint.Pages.ColorPage
     [Authorize]
     public class EditModel : PageModel
     {
-        private readonly RohamPaint.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
 
-        public EditModel(RohamPaint.Data.ApplicationDbContext context)
+        public EditModel(Data.ApplicationDbContext context)
         {
             _context = context;
         }
