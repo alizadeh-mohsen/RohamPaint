@@ -12,7 +12,7 @@
 
 <form method="get" class="row g-3 mb-4">
     <div class="col-md-10">
-        <input type="text" name="search" class="form-control" placeholder="Search by code, comment, or make..." value="@ViewContext.HttpContext.Request.Query["search"]" />
+        <input type="text" name="search" class="form-control" placeholder="Search by Color Code, Car/Company or Comment..." value="@ViewContext.HttpContext.Request.Query["search"]" />
     </div>
     <div class="col-md-2">
         <button type="submit" class="btn btn-primary w-100">Search</button>
@@ -41,10 +41,10 @@ else
                 <th>Code</th>
                 <th>Make</th>
                 <th>ColorType</th>
-                <th>Comment</th>
+               @*  <th>Comment</th>
                 <th>Usage</th>
                 <th>LastUpdate</th>
-                <th>Unit</th>
+                <th>Unit</th> *@
                 <th></th>
             </tr>
         </thead>
@@ -55,10 +55,10 @@ else
                     <td>@item.Code</td>
                     <td>@item.Make</td>
                     <td>@item.ColorType</td>
-                    <td>@item.Comment</td>
+                    @* <td>@item.Comment</td>
                     <td>@item.Usage</td>
                     <td>@item.LastUpdate.ToShortDateString()</td>
-                    <td>@item.Unit</td>
+                    <td>@item.Unit</td> *@
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                         <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
