@@ -1,8 +1,6 @@
 ﻿@page
+@model RohamPaint.Pages.MixItModel
 @using RohamPaint.ViewModels
-@model RohamPaint.Pages.ColorPage.DetailsModel
-@Html.AntiForgeryToken()
-<script src="/path/to/htmx.min.js"></script>
 @{
     ViewData["Title"] = "Details";
     Layout = "_LayoutFront";
@@ -15,7 +13,7 @@
     <div class="card mb-4 shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">فرمول رنگ</h5>
-           
+
         </div>
         <div class="card-body">
             <dl class="row mb-0">
@@ -50,100 +48,104 @@
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Color.Unit)</dd>
             </dl>
         </div>
-     
+
     </div>
 
     <!-- ── PART 2: Formula Table ── -->
     @if (Model.Color.Formuls.Any())
     {
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover table-striped align-middle">
-                <thead class="table-secondary">
-                    <tr>
-                        <th>@Html.DisplayNameFor(model => model.Color.Formuls[0].BaseColor)</th>
-                        <th>@Html.DisplayNameFor(model => model.Color.Formuls
-                            [0].Weight)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <partial name="_FormulsTableFront" model="new FormulsTableViewModel { Formuls = Model.Color.Formuls }" />
-            </table>
-        </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped align-middle">
+            <thead class="table-secondary">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Color.Formuls[0].BaseColor)</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Color.Formuls
+                        [0].Weight)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <partial name="_FormulsTableFront" model="new FormulsTableViewModel { Formuls = Model.Color.Formuls }" />
+        </table>
+    </div>
 
-        <!-- Easy Mix Panel -->
-        <div id="easyMixDiv" style="display:none" class="card mb-3 border-primary">
-            <div class="card-header text-primary fw-semibold">تغییر وزن بیس</div>
-            <div class="card-body">
-                <form id="easyMixForm" method="post">
-                    <input type="hidden" id="formulId" name="formulId" />
-                    <input type="hidden" name="colorId" value="@Model.Color.ID" />
-                    <div class="row g-2 align-items-end">
-                        <div class="col-sm-4">
-                            <label class="form-label small">کد رنگ بیس</label>
-                            <input type="text" id="baseColor" name="baseColor" class="form-control form-control-sm" readonly />
-                        </div>
-                        <div class="col-sm-3">
-                            <label class="form-label small">وزن</label>
-                            <input type="text" id="weight" name="weight" class="form-control form-control-sm" />
-                        </div>
-                        <div class="col-sm-2 d-flex align-items-end pb-1">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="isGram" name="isGram" checked />
-                                <label class="form-check-label small" for="isGram">گرم</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 d-flex gap-2">
-                            <button type="button"
-                                    hx-post="?handler=Mix"
-                                    hx-target="#formuls-tbody"
-                                    hx-swap="outerHTML"
-                                    hx-include="#easyMixForm"
-                                    hx-on::after-request="document.getElementById('easyMixDiv').style.display='none'"
-                                    class="btn btn-primary btn-sm">
-                                تغییر وزن
-                            </button>
-                            <button type="button" onclick="hideEasyMix()" class="btn btn-outline-secondary btn-sm">انصراف</button>
+    <!-- Easy Mix Panel -->
+    <div id="easyMixDiv" style="display:none" class="card mb-3 border-primary">
+        <div class="card-header text-primary fw-semibold">تغییر وزن بیس</div>
+        <div class="card-body">
+            <form id="easyMixForm" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="colorId" value="@Model.Color.ID" />
+                <input type="hidden" id="formulId" name="formulId" />
+                <div class="row g-2 align-items-end">
+                    <div class="col-sm-4">
+                        <label class="form-label small">کد رنگ بیس</label>
+                        <input type="text" id="baseColor" name="baseColor" class="form-control form-control-sm" readonly />
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="form-label small">وزن</label>
+                        <input type="text" id="weight" name="weight" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-sm-2 d-flex align-items-end pb-1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="isGram" name="isGram" checked />
+                            <label class="form-check-label small" for="isGram">گرم</label>
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="col-sm-3 d-flex gap-2">
+                        <button type="button"
+                                hx-post="?handler=Mix"
+                                hx-target="#formuls-tbody"
+                                hx-swap="outerHTML"
+                                hx-include="#easyMixForm"
+                                hx-on::after-request="document.getElementById('easyMixDiv').style.display='none'"
+                                class="btn btn-primary btn-sm">
+                            تغییر وزن
+                        </button>
+                        <button type="button" onclick="hideEasyMix()" class="btn btn-outline-secondary btn-sm">انصراف</button>
+                    </div>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <!-- Change Base Panel -->
-        <div id="changeBaseDiv" style="display:none" class="card mb-3 border-warning">
-            <div class="card-header text-warning fw-semibold">تغییر وزن پایه</div>
-            <div class="card-body">
-                <form id="changeBaseForm" method="post">
-                    <input type="hidden" id="formulId" name="formulId" />
+    <!-- Change Base Panel -->
+    <div id="changeBaseDiv" style="display:none" class="card mb-3 border-warning">
+        <div class="card-header text-warning fw-semibold">تغییر وزن پایه</div>
+        <div class="card-body">
+            <form id="changeBaseForm" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="row g-2 align-items-end">
                     <input type="hidden" name="colorId" value="@Model.Color.ID" />
-                    <div class="row g-2 align-items-end">
-                        <div class="col-sm-4">
-                            <label class="form-label small">وزن جدید</label>
-                            <input type="text" id="weight" name="weight" class="form-control form-control-sm" />
-                        </div>
-                        <div class="col-sm-2 d-flex align-items-end pb-1">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="isGram" name="isGram" checked />
-                                <label class="form-check-label small" for="isGram">گرم</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 d-flex gap-2">
-                            <button type="button"
-                                    hx-post="?handler=ChangeBaseWeight"
-                                    hx-target="#formuls-tbody"
-                                    hx-swap="outerHTML"
-                                    hx-include="#changeBaseForm"
-                                    hx-on::after-request="document.getElementById('changeBaseDiv').style.display='none'"
-                                    class="btn btn-warning btn-sm">
-                                محاسبه
-                            </button>
-                            <button type="button" onclick="hideChangeBase()" class="btn btn-outline-secondary btn-sm">انصراف</button>
+                    <div class="col-sm-4">
+                        <label class="form-label small">وزن جدید</label>
+                        <input type="text" id="cb_weight" name="cb_weight" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-sm-2 d-flex align-items-end pb-1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="cb_isGram" name="cb_isGram" checked />
+                            <label class="form-check-label small" for="cb_isGram">گرم</label>
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="col-sm-3 d-flex gap-2">
+                        <button type="button"
+                                hx-post="?handler=ChangeBaseWeight"
+                                hx-target="#formuls-tbody"
+                                hx-swap="outerHTML"
+                                hx-include="#changeBaseForm"
+                                hx-on::after-request="document.getElementById('changeBaseDiv').style.display='none'"
+                                class="btn btn-warning btn-sm">
+                            محاسبه
+                        </button>
+                        <button type="button" onclick="hideChangeBase()" class="btn btn-outline-secondary btn-sm">انصراف</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    }
+    </div>
+        }
 
 </div>
 
@@ -161,36 +163,14 @@
             document.getElementById('baseColor').value = '';
             document.getElementById('weight').value = '';
         }
-        function showChangeBase(id, baseColor, weight) {
-            document.getElementById('formulId').value = id;
-            document.getElementById('baseColor').value = baseColor;
-            document.getElementById('weight').value = weight;
+        function showChangeBase(weight) {
+            document.getElementById('cb_weight').value = weight;
             document.getElementById('changeBaseDiv').style.display = 'block';
             document.getElementById('easyMixDiv').style.display = 'none';
         }
         function hideChangeBase() {
             document.getElementById('changeBaseDiv').style.display = 'none';
-            document.getElementById('baseColor').value = '';
-            document.getElementById('weight').value = '';
+            document.getElementById('cb_weight').value = '';
         }
-        document.getElementById("btnAjax")?.addEventListener("click", () => {
-            const payload = {
-                colorId: document.getElementById('colorId').value,
-                id: document.getElementById('formulId').value,
-                newWeight: document.getElementById('weight').value,
-                isGram: document.getElementById('flexCheckDefault').checked,
-            };
-            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
-            fetch("?handler=Mix", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "RequestVerificationToken": token
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(r => r.json())
-            .then(data => console.log(data));
-        });
     </script>
 }

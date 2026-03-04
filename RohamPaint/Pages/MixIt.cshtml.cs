@@ -68,15 +68,6 @@ namespace RohamPaint.Pages
             return Page();
         }
 
-        public class RequestModel
-        {
-            public string Id { get; set; }
-            public string ColorId { get; set; }
-            public string NewWeight { get; set; }
-            public bool IsGram { get; set; }
-        }
-
-
         public PartialViewResult OnPostMix(int formulId, int colorId, string weight, bool isGram)
         {
             var color = _context.Color
@@ -86,7 +77,7 @@ namespace RohamPaint.Pages
 
 
             if (string.IsNullOrWhiteSpace(weight))
-                return Partial("_FormulsTable", formuls);
+                return Partial("_FormulsTableFront", formuls);
 
             var newValue = float.Parse(weight);
             var oldValue = color.Formuls.First(f => f.ID == formulId).Weight;
@@ -111,30 +102,30 @@ namespace RohamPaint.Pages
             Color.Formuls = formuls;
             TotalWeight = total.ToString();
 
-            //return Partial("_FormulsTable", formuls);
-            return Partial("_FormulsTable", new FormulsTableViewModel
+            //return Partial("_FormulsTableFrontFront", formuls);
+            return Partial("_FormulsTableFront", new FormulsTableViewModel
             {
                 Formuls = formuls
             });
         }
-        public PartialViewResult OnPostChangeBaseWeight(int formulId, int colorId, string weight, bool isGram)
+        public PartialViewResult OnPostChangeBaseWeight(int colorId, string cb_weight, bool cb_isGram)
         {
             var color = _context.Color
                 .Include(c => c.Formuls)
                 .FirstOrDefault(c => c.Id == colorId);
             List<ColorFormulViewModel> formuls = new List<ColorFormulViewModel>();
 
-            if (string.IsNullOrWhiteSpace(weight))
-                return Partial("_FormulsTable", formuls);
+            if (string.IsNullOrWhiteSpace(cb_weight))
+                return Partial("_FormulsTableFront", formuls);
 
-            var newBase = float.Parse(weight);
+            var newBase = float.Parse(cb_weight);
             var previousTotal = color.Formuls.Sum(f => f.Weight);
 
             var total = 0f;
             foreach (var formul in color.Formuls)
             {
                 formul.Weight =
-                     (float)(isGram ?
+                     (float)(cb_isGram ?
                      Math.Round(formul.Weight * newBase / previousTotal, 1) :
                      Math.Round(formul.Weight * newBase / previousTotal, 2));
                 formuls.Add(new ColorFormulViewModel
@@ -149,8 +140,8 @@ namespace RohamPaint.Pages
             Color.Formuls = formuls;
             TotalWeight = total.ToString();
 
-            //return Partial("_FormulsTable", formuls);
-            return Partial("_FormulsTable", new FormulsTableViewModel
+            //return Partial("_FormulsTableFront", formuls);
+            return Partial("_FormulsTableFront", new FormulsTableViewModel
             {
                 Formuls = formuls
             });
@@ -215,8 +206,6 @@ namespace RohamPaint.Pages
 
                         page.Footer().Row(row =>
                         {
-
-
                             row.ConstantItem(40).Text("Address:").SemiBold(); // Fixed width for labels
                             row.RelativeItem().Text("Iraj Sharifi");                // Value takes remaining space
                             row.ConstantItem(40).Text("Phone:").SemiBold(); // Fixed width for labels

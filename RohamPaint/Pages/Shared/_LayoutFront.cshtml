@@ -75,6 +75,22 @@
             </div>
         </footer>
 
-@RenderSection("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/htmx/htmx.js"></script>
+
+    <script>
+                document.body.addEventListener('htmx:configRequest', function (e) {
+            const token = document.cookie
+                .split(';')
+                .find(c => c.trim().startsWith('XSRF-TOKEN='))
+                ?.split('=')[1];
+            if (token) {
+                e.detail.headers['X-XSRF-TOKEN'] = decodeURIComponent(token);
+            }
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

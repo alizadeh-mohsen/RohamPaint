@@ -70,7 +70,7 @@ namespace RohamPaint.Pages.ColorPage
             return Page();
         }
 
-      
+
 
 
         public PartialViewResult OnPostMix(int formulId, int colorId, string weight, bool isGram)
@@ -113,24 +113,24 @@ namespace RohamPaint.Pages.ColorPage
                 Formuls = formuls
             });
         }
-        public PartialViewResult OnPostChangeBaseWeight(int formulId, int colorId, string weight, bool isGram)
+        public PartialViewResult OnPostChangeBaseWeight(int colorId, string cb_weight, bool cb_isGram)
         {
             var color = _context.Color
                 .Include(c => c.Formuls)
                 .FirstOrDefault(c => c.Id == colorId);
             List<ColorFormulViewModel> formuls = new List<ColorFormulViewModel>();
 
-            if (string.IsNullOrWhiteSpace(weight))
+            if (string.IsNullOrWhiteSpace(cb_weight))
                 return Partial("_FormulsTable", formuls);
 
-            var newBase = float.Parse(weight);
+            var newBase = float.Parse(cb_weight);
             var previousTotal = color.Formuls.Sum(f => f.Weight);
 
             var total = 0f;
             foreach (var formul in color.Formuls)
             {
                 formul.Weight =
-                     (float)(isGram ?
+                     (float)(cb_isGram ?
                      Math.Round(formul.Weight * newBase / previousTotal, 1) :
                      Math.Round(formul.Weight * newBase / previousTotal, 2));
                 formuls.Add(new ColorFormulViewModel

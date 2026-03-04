@@ -34,12 +34,19 @@ builder.Services.AddAntiforgery(options =>
 
 var app = builder.Build();
 
+// Program.cs - replace your existing middleware with this:
 app.Use(async (context, next) =>
 {
     var antiforgery = context.RequestServices.GetRequiredService<IAntiforgery>();
-    var tokens = antiforgery.GetAndStoreTokens(context);
-    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken!,
-        new CookieOptions { HttpOnly = false }); // false so JS can read it
+
+    // Only set cookie if it's not already present
+    if (!context.Request.Cookies.ContainsKey("XSRF-TOKEN"))
+    {
+        var tokens = antiforgery.GetAndStoreTokens(context);
+        context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken!,
+            new CookieOptions { HttpOnly = false });
+    }
+
     await next(context);
 });
 
