@@ -2,7 +2,12 @@
 {
     public class FormulsTableViewModel
     {
-        public List<ColorFormulViewModel> Formuls { get; set; }
+        List<ColorFormulViewModel> _formuls;
+        public List<ColorFormulViewModel> Formuls
+        {
+            get { return _formuls.OrderBy(c => c.BaseColor).ToList(); }
+            set { _formuls = value; }
+        }
         public float TotalWeight => Formuls?.Sum(f => f.Weight) ?? 0;
     }
 }
