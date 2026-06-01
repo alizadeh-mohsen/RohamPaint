@@ -22,6 +22,10 @@ namespace RohamPaint.Pages.ColorPage
 
         public async Task OnGetAsync([FromQuery] QueryParams queryParams, string? search)
         {
+            //if (!string.IsNullOrEmpty(theme))
+            //{
+            //    Response.Cookies.Append("theme", theme);
+            //}
             try
             {
                 if (string.IsNullOrWhiteSpace(search) && queryParams.PageNumber <= 1)

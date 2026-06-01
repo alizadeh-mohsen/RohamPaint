@@ -68,6 +68,15 @@ app.UseAuthentication();  // must come before
 app.UseAuthorization();   // this
 
 app.MapRazorPages();
+try
+{
+    await ApplyMigrationsAsync(app);
+}
+catch (Exception)
+{
+
+    throw;
+}
 
 app.Run();
 

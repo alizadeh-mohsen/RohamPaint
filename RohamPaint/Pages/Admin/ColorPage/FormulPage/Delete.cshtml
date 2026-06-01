@@ -35,6 +35,7 @@
     <form method="post">
         <input type="hidden" asp-for="ColorFormul.ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a class="btn btn-secondary" asp-page="./Index">Back to List</a>
+        <a asp-page="/Admin/ColorPage/Details" asp-route-id="@Model.ColorFormul.ColorID" class="btn btn-secondary">Back to List</a>
+
     </form>
 </div>

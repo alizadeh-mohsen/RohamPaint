@@ -7,7 +7,10 @@
 
 <h1>Color</h1>
 <p>
-    <a class="btn btn-primary" asp-page="Create">Create New</a>
+    <a class="btn btn-primary" asp-page="/Admin/ColorPage/Create">Create New</a>
+   @*  <a asp-page="/Admin/BasePage/Index" asp-route-theme="lux">Lux</a>
+    <a asp-page="/Admin/BasePage/Index" asp-route-theme="cosmo">Cosmo</a>
+    <a asp-page="/Admin/BasePage/Index" asp-route-theme="cyborg">Cyborg</a> *@
 </p>
 
 <form method="get" class="row g-3 mb-4">
@@ -22,9 +25,9 @@
 
 @if (!hasSearched)
 {
-   @*  <div class="alert alert-info">
+     <div class="alert alert-info">
         Please enter a search term to view results.
-    </div> *@
+    </div> 
 }
 else if (Model.Colors?.Count == 0)
 {
@@ -60,15 +63,18 @@ else
                     <td>@item.LastUpdate.ToShortDateString()</td>
                     <td>@item.Unit</td> *@
                     <td>
-                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                        <a asp-page="ColorPage/Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-page="ColorPage/Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-page="ColorPage/Delete" asp-route-id="@item.ID">Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
     </div>
+
+  
+
     <partial name="_Pagination" model='new RohamPaint.ViewModels.PaginationModel
                                 {
                                     MetaData = Model.MetaData,

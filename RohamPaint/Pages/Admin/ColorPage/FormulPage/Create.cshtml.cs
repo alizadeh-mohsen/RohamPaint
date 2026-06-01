@@ -31,7 +31,7 @@ namespace RohamPaint.Pages.ColorPage.FormulPage
         }
 
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int ColorId)
         {
             if (!ModelState.IsValid)
             {
@@ -42,7 +42,10 @@ namespace RohamPaint.Pages.ColorPage.FormulPage
             _context.ColorFormul.Add(colorFormul);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("../Index");
+            return RedirectToPage("/Admin/ColorPage/Details", new
+            {
+                id = ColorId
+            });
         }
     }
 }

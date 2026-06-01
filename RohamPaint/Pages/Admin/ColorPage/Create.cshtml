@@ -69,7 +69,7 @@
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary mt-2" />
-                <a asp-page="Index" class="btn btn-secondary mt-2 ">Back to List</a>
+                <a asp-page="/Admin/Index" class="btn btn-secondary mt-2 ">Back to List</a>
             </div>
         </form>
     </div>
@@ -96,7 +96,7 @@
             container.appendChild(div);
         }
 
-        function remove(btn) {
+        function removeFormul(btn) {
             btn.parentElement.remove();
             // re-index inputs
             const rows = document.querySelectorAll(".formul-row input");
