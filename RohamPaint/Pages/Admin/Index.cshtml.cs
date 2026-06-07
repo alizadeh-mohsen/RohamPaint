@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Modelhelper;
 using RohamPaint.ViewModels;
 
-namespace RohamPaint.Pages.ColorPage
+namespace RohamPaint.Pages.Admin
 {
     [Authorize]
     public class IndexModel : PageModel
