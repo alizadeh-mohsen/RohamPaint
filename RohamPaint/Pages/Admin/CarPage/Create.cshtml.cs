@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.CarPage
+namespace RohamPaint.Pages.Admin.CarPage
 {
     [Authorize]
     public class CreateModel : PageModel

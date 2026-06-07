@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text;
 
-namespace RohamPaint.Pages.NotePage
+namespace RohamPaint.Pages.Admin.NotePage
 {
     [Authorize]
     public class IndexModel : PageModel

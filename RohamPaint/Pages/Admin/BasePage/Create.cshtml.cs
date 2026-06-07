@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using RohamPaint.Data;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.BasePage
+namespace RohamPaint.Pages.Admin.BasePage
 {
 
     [Authorize]

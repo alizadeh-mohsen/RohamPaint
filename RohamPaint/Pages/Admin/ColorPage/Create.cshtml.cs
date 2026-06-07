@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RohamPaint.ViewModels;
 
-namespace RohamPaint.Pages.ColorPage
+namespace RohamPaint.Pages.Admin.ColorPage
 {
     [Authorize]
     public class CreateModel : PageModel

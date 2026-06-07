@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.ColorTypePage
+namespace RohamPaint.Pages.Admin.ColorTypePage
 {
     [Authorize]
     public class DetailsModel : PageModel

@@ -6,7 +6,7 @@ using RohamPaint.Data;
 using RohamPaint.Modelhelper;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.CarPage
+namespace RohamPaint.Pages.Admin.CarPage
 {
     [Authorize]
     public class IndexModel : PageModel

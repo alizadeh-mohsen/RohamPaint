@@ -6,7 +6,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using RohamPaint.ViewModels;
 
-namespace RohamPaint.Pages.ColorPage
+namespace RohamPaint.Pages.Admin.ColorPage
 {
     [Authorize]
     public class DetailsModel : PageModel

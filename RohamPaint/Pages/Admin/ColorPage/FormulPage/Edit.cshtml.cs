@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using RohamPaint.Data;
 using RohamPaint.ViewModels;
 
-namespace RohamPaint.Pages.ColorPage.FormulPage
+namespace RohamPaint.Pages.Admin.ColorPage.FormulPage
 {
     [Authorize]
     public class EditModel : PageModel

@@ -1,0 +1,24 @@
+@page
+@model RohamPaint.Pages.Admin.Theme.IndexModel
+@{
+    ViewData["Title"] = "Optimise Your Theme";
+}
+
+<div class="pt-3 text-secondary">
+    Selected Theme:
+    <strong class="text-primary">@Model.SelectedTheme</strong>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="form-group mb-3">
+                <label asp-for="SelectedTheme" class="form-label">Choose a Theme</label>
+                <select asp-for="SelectedTheme" asp-items="Model.ThemeList" class="form-select" onchange="this.form.submit()">
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary d-none">Apply Theme</button>
+        </form>
+    </div>
+</div>

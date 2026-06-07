@@ -26,6 +26,8 @@ namespace RohamPaint.Pages.ColorPage
             //{
             //    Response.Cookies.Append("theme", theme);
             //}
+
+
             try
             {
                 if (string.IsNullOrWhiteSpace(search) && queryParams.PageNumber <= 1)

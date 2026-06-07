@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.ColorPage.FormulPage
+namespace RohamPaint.Pages.Admin.ColorPage.FormulPage
+
 {
     [Authorize]
     public class DeleteModel : PageModel

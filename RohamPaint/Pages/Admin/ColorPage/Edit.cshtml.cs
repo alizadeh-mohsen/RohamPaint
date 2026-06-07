@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RohamPaint.Models;
 
-namespace RohamPaint.Pages.ColorPage
+namespace RohamPaint.Pages.Admin.ColorPage
 {
     [Authorize]
     public class EditModel : PageModel
