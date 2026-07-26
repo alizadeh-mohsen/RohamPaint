@@ -3,24 +3,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-
 namespace RohamPaint.Pages.Admin.Theme
 {
     [Authorize]
     public class IndexModel : PageModel
     {
         [BindProperty]
-        public string SelectedTheme { get; set; } = "default";
+        public string SelectedTheme { get; set; } = "Default";
 
         public List<SelectListItem> ThemeList { get; set; } = new();
 
         private readonly List<string> _themes = new()
         {
-            "Default", "Cerulean", "Cosmo", "Cyborg", "Darkly",
-            "Flatly", "Journal", "Litera", "Lumen", "Lux",
-            "Materia", "Minty", "Morph", "Pulse", "Quartz",
-            "Sandstone", "Simplex", "Sketchy", "Slate", "Solar",
-            "Spacelab", "Superhero", "United", "Vapor", "Yeti", "Zephyr"
+            "default", "cerulean", "cosmo", "cyborg", "darkly",
+            "flatly", "journal", "litera", "lumen", "lux",
+            "materia", "minty", "morph", "pulse", "quartz",
+            "sandstone", "simplex", "sketchy", "slate", "solar",
+            "spacelab", "superhero", "united", "vapor", "yeti", "zephyr"
         };
 
         public void OnGet()
@@ -34,13 +33,16 @@ namespace RohamPaint.Pages.Admin.Theme
         {
             if (!string.IsNullOrEmpty(SelectedTheme))
             {
-                // Save the selected theme into a cookie that lasts for 1 year
-                CookieOptions option = new()
+                // Save the selected theme into a cookie that lasts for 1 year.
+                // Use Request.IsHttps so the cookie is only marked Secure when running over HTTPS.
+                // This avoids the cookie being ignored on production when the site isn't served over HTTPS.
+                var option = new CookieOptions
                 {
-                    Expires = DateTime.Now.AddYears(1),
+                    Expires = DateTimeOffset.UtcNow.AddYears(1),
                     HttpOnly = true,
-                    Secure = true, // Ensures cookie is transmitted over HTTPS
-                    SameSite = SameSiteMode.Strict
+                    Secure = Request.IsHttps,
+                    SameSite = SameSiteMode.Lax,
+                    Path = "/"
                 };
 
                 Response.Cookies.Append("SelectedTheme", SelectedTheme, option);
@@ -52,13 +54,14 @@ namespace RohamPaint.Pages.Admin.Theme
 
         private void PopulateThemeList()
         {
+            ThemeList.Clear();
             foreach (var theme in _themes)
             {
                 ThemeList.Add(new SelectListItem
                 {
                     Text = theme,
                     Value = theme,
-                    Selected = theme == SelectedTheme
+                    Selected = string.Equals(theme, SelectedTheme, StringComparison.OrdinalIgnoreCase)
                 });
             }
         }

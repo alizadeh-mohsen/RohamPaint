@@ -1,6 +1,6 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
-    var currentTheme = HttpContextAccessor.HttpContext?.Request.Cookies["SelectedTheme"] ?? "Default";
+    var currentTheme = HttpContextAccessor.HttpContext?.Request.Cookies["SelectedTheme"] ?? "default";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -9,16 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - RohamPaint</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    @if (currentTheme == "Default")
-    {
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    }
-    else
-    {
-        @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/@currentTheme.ToLower()/bootstrap.min.css" /> *@
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/@currentTheme.ToLower()/bootstrap.min.css" />
-    }
-
+    <link rel="stylesheet" href="@(Url.Content(currentTheme == "default" ? "~/lib/bootstrap/dist/css/bootstrap.css" : $"~/lib/bootstrap/dist/css/{currentTheme.ToLower()}/bootstrap.min.css"))" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RohamPaint.styles.css" asp-append-version="true" />
 </head>

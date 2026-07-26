@@ -71,7 +71,7 @@ app.UseAuthorization();   // this
 app.MapRazorPages();
 try
 {
-    await ApplyMigrationsAsync(app);
+    //await ApplyMigrationsAsync(app);
 }
 catch (Exception)
 {
